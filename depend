@@ -1,0 +1,2 @@
+GlobalAXBSolver.o: GlobalAXBSolver.cpp
+GlobalPDE.o: GlobalPDE.cpp
