@@ -5,10 +5,15 @@
 
 #include <iostream>
 #include <cmath>
-#include <stdlib>
+#include <cstdlib>
+
+
+#include "Vector.h"
+#include "FullMatrix.h"
 
 using namespace std;
 
+template <class DT>
 const Vector<DT> gaussSeidel(FullMatrix<DT> a, Vector<DT> b)
 {
   
@@ -17,7 +22,8 @@ const Vector<DT> gaussSeidel(FullMatrix<DT> a, Vector<DT> b)
   return (b);
 }
 
-const Vector<DT> seepestDescent(FullMatrix<DT> a, Vector<DT> b)
+template <class DT>
+const Vector<DT> steepestDescent(FullMatrix<DT> a, Vector<DT> b)
 {
   
   //-------------------insert function here------------------//

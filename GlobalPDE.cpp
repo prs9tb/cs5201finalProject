@@ -6,11 +6,15 @@
 
 #include <iostream>
 #include <cmath>
-#include <stdlib>
+#include <cstdlib>
+
+#include "Vector.h"
+#include "FullMatrix.h"
+#include "SymmMatrix.h"
 
 using namespace std;
 
-
+/*
 template < Vector<DT> axbsolver(FullMatrix<DT>, Vector<DT>)>
 FullMatrix<DT> pdeApproximate(int n, int iterations)
 {
@@ -21,8 +25,9 @@ FullMatrix<DT> pdeApproximate(int n, int iterations)
   return (newM);
 
 }
+*/
 
-
+template <class DT>
 SymmMatrix<DT> genApdeMatrix(unsigned int n)
 {
   SymmMatrix<DT> aMatrix(n, n);
@@ -32,6 +37,7 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
   return (aMatrix);
 }
 
+template <class DT>
 Vector<DT> genBpdeVector(unsigned int n)
 {
   SymmMatrix<DT> bVector(n, n);
