@@ -29,74 +29,31 @@ int main(int argc, char * argv[])
 {
 	ifstream ifs;
 	string filename;
+	bool fileForInput = false;
 	
 	if (argc > 1)
+	{
 		filename = argv[1];
+		fileForInput = true;
+	}
 	
-	while ( ifs.is_open() == false)
+	
+	while (fileForInput && ifs.is_open() == false)
 	{
 		if ( filename == "" )
 		{
-  	 	                                            	cout<<"Enter in the input data set:"<<endl;
+			cout<<"Enter input file:"<<endl;
 		   	cin >> filename;
 		}
-		
 		ifs.open(filename.c_str());
 		filename = "";
 	}
 	
+	cout<<"Running unit tests ...."<<endl;
 	
-	int dimensions;
-	ifs >> dimensions;
-	FullMatrix<double> inputMatrix1(dimensions);
-	Vector<double> bVec1(dimensions);
-	ifs >> inputMatrix1;
-	ifs >> bVec1;
-	ifs >> dimensions;
-	FullMatrix<double> inputMatrix2(dimensions);
-	Vector<double> bVec2(dimensions);
-	ifs >> inputMatrix2;
-	ifs >> bVec2;
-	ifs.close();
-	
-	TriDiagMatrix<double> triDiagInput(inputMatrix1);
-	cout<<"*************   First input matrix: "<<endl;
-	cout<<triDiagInput<<endl;
-	cout<<"*************   First input vector: "<<endl;
-	cout<<bVec1<<endl<<endl;
-	
-	SymmMatrix<double> symmInput(inputMatrix2);
-	cout<<"*************   Second input matrix: "<<endl;
-	cout<<symmInput<<endl;
-	cout<<"*************   Second input vector: "<<endl;
-	cout<<bVec2<<endl<<endl;
-	
-	
-	
-	cout<<"%%%%%%%%%%%% Here is the Thomas Algorithm: %%%%%%%%%%%%%%%"<<endl;
-	ThomasTriDiag ThomasSolver;
-	Vector<double> thomasSoln = ThomasSolver(triDiagInput, bVec1);
-	cout<<"Solution is : "<<thomasSoln<<endl<<endl;
-	
-	cout<<"%%%%%%%%%%%% Here is the Cholesky Decomposition: %%%%%%%%%%%%%"<<endl;
-	CholeskyDecomp symmDecomposer;
-	LowerTriMatrix<double> decompMatrix = symmDecomposer(symmInput);
-	cout<<decompMatrix<<endl<<endl;
-	
-	cout<<"Press enter to see some lovely Matrix tests: "<<endl;
-	cin.get();
-	
-	// testVectorClass();
+	testVectorClass();
 	// testFullMatrixClass();
-	// testLowMatrixClass();
-	// testUpperMatrixClass();
-	testSymmMatrixClass();
-	testDiagMatrixClass();
-	testTriDiagMatrixClass();
-	
-	cout<<"*** You may comment/uncomment other tests suites in driver.cpp *** "<<endl;
-	cout<<"*** All tests are in Tests.cpp , so go take a look if you're curious"<<endl;
-	cout<<"Goodbye :) "<<endl;
+	// testSymmMatrixClass();
 	
 	return 0;
 }
