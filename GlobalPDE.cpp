@@ -58,8 +58,8 @@ double poissonEdge(double x, double y)
 
 double poissonAnalytical(double x, double y)
 {
-
-  return x;
+  double answer = (1/sinh(M_PI)) *(sin(x)*sinh(M_PI-y) + sin(y)*sinh(M_PI-x));
+  return answer;
 }
 
 
