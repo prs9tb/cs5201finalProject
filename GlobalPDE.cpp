@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdlib>
 
+#include "RangeError.h"
 #include "Vector.h"
 #include "FullMatrix.h"
 #include "SymmMatrix.h"
@@ -27,6 +28,11 @@ FullMatrix<DT> pdeApproximate(int n, int iterations)
 }
 */
 
+const double X_MIN = 0;
+const double Y_MIN = 0;
+const double X_MAX = M_PI;
+const double Y_MAX = M_PI;
+
 template <class DT>
 SymmMatrix<DT> genApdeMatrix(unsigned int n)
 {
@@ -40,7 +46,7 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
 template <class DT>
 Vector<DT> genBpdeVector(unsigned int n)
 {
-  SymmMatrix<DT> bVector(n, n);
+  Vector<DT> bVector(n);
   
   //-------------------insert function here------------------//
   
@@ -52,8 +58,18 @@ Vector<DT> genBpdeVector(unsigned int n)
 
 double poissonEdge(double x, double y)
 {
-  
-  return x;
+	if (x == X_MIN)
+		return sin(y);
+	if (x == X_MAX)
+		return 0;
+	if (y == Y_MIN)
+		return sin(x);
+	if (y == Y_MAX)
+		return 0;
+	throw RangeError("x,y is not on poisson edge");
+		
+	return 0;
+	
 }
 
 double poissonAnalytical(double x, double y)
