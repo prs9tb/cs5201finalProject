@@ -1,0 +1,6 @@
+Tests.o: Tests.cpp Tests.h Vector.h Vector.hpp MatrixBase.h FullMatrix.h \
+ FullMatrix.hpp SymmMatrix.h SymmMatrix.hpp GlobalFunctions.h \
+ GlobalFunctions.hpp
+driver.o: driver.cpp Vector.h Vector.hpp MatrixBase.h FullMatrix.h \
+ FullMatrix.hpp SymmMatrix.h SymmMatrix.hpp GlobalFunctions.h \
+ GlobalFunctions.hpp Tests.h

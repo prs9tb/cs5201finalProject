@@ -12,15 +12,8 @@
 #include "Vector.h"
 #include "MatrixBase.h"
 #include "FullMatrix.h"
-#include "LowerTriMatrix.h"
-#include "UpperTriMatrix.h"
 #include "SymmMatrix.h"
-       	 		#include "DiagMatrix.h"
-#include "TriDiagMatrix.h"
 #include "GlobalFunctions.h"
-#include "GaussElim.h"
-#include "CholeskyDecomp.h"
-#include "ThomasTriDiag.h"
 #include "Tests.h"
 
 using namespace std;
@@ -37,7 +30,6 @@ int main(int argc, char * argv[])
 		fileForInput = true;
 	}
 	
-	
 	while (fileForInput && ifs.is_open() == false)
 	{
 		if ( filename == "" )
@@ -52,7 +44,7 @@ int main(int argc, char * argv[])
 	cout<<"Running unit tests ...."<<endl;
 	
 	testVectorClass();
-	// testFullMatrixClass();
+	testFullMatrixClass();
 	// testSymmMatrixClass();
 	
 	return 0;
