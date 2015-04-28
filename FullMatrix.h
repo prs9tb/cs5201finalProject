@@ -133,19 +133,6 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
     virtual const DT& getValue(unsigned int r, unsigned int c) const;
     virtual void setValue(unsigned int r, unsigned int c, const DT& value);
     
-    
-		///\pre unallocated m_data
-		///\post allocated m_data and members sized correctly
-		///\param source shows data to be copied to here
-		template <class MT>
-		void construct(const MatrixBase<MT, DT>& source);
-		
-		///\pre unallocated m_data
-		///\post allocated m_data and members sized correctly
-		///\param rows: int number of rows in matrix
-		///\param cols: int number of cols in matrix
-		void construct(unsigned int rows, unsigned int cols);
-		
 		// Pre: None
 		//Excp: throws out_of_range if index exceeds m_rows
 		//Post: accesses the m_data[index] element
@@ -164,7 +151,18 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 		unsigned int m_rows;
 		unsigned int m_cols;
 		static const DT s_zeroElt;
+    
+		///\pre unallocated m_data
+		///\post allocated m_data and members sized correctly
+		///\param source shows data to be copied to here
+		template <class MT>
+		void construct(const MatrixBase<MT, DT>& source);
 		
+		///\pre unallocated m_data
+		///\post allocated m_data and members sized correctly
+		///\param rows: int number of rows in matrix
+		///\param cols: int number of cols in matrix
+		void construct(unsigned int rows, unsigned int cols);
 };
 
 template <class DT>
