@@ -13,64 +13,53 @@ using namespace std;
 #include <string.h>
 
 
+
+#include <stdio.h>
+
 #include <exception>
 
 class RangeError: public exception
 {
   public:
     RangeError(int i)
-	{
-		char numstr[21]; // enough to hold all numbers up to 64-bits
-		itoa(i, numstr, 10);
-		
-		strcat(message, "Range Error: ");
-		strcat(message, numstr);
-	}
+    {
+      sprintf(message, "Range Error: value=%d", i);
+    }
 	
+    RangeError(const char* err)
+    {
+      sprintf(message, "[%s]" , err);
+    }
 	
-	
-	RangeError(const char* err)
-	{
-		strcat(message, err);
-	}
-	
-	
-	
-    int badSubsur();
-	virtual const char* what() const noexcept  
-	{
-		return message;
-	}
+    virtual const char* what() const noexcept  
+    {
+      return message;
+    }
 	
   private:
-	char* message[100];
-    int subsur;
+    char message[100];
 };
 
 class SizeError: public exception
 {
   public:
-    SizeError(int i);
-    int badSubsur();
+    SizeError(int i)
+    {
+      sprintf(message, "Size Error: value=%d", i);
+    }
+	
+    SizeError(const char* err)
+    {
+      sprintf(message, "[%s]" , err);
+    }
+	
+    virtual const char* what() const noexcept  
+    {
+      return message;
+    }
+	
   private:
-    int subsur;
+    char message[100];
 };
-int RangeError::badSubsur()
-{
-  return subsur;
-}
-int SizeError::badSubsur()
-{
-  return subsur;
-}
-RangeError::RangeError(int i)
-{
-  subsur = i;
-}
-
-SizeError::SizeError(int i)
-{
-  subsur = i;
-}
 
 #endif
