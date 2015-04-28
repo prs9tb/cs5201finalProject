@@ -15,18 +15,28 @@
 
 using namespace std;
 
-/*
-template < Vector<DT> axbsolver(FullMatrix<DT>, Vector<DT>)>
-FullMatrix<DT> pdeApproximate(int n, int iterations)
-{
-  FullMatrix<DT> newM(n, n);
-  
-  //-------------------insert function here------------------//
-  
-  return (newM);
 
+template <class DT>
+Vector<DT> pdeApproximate(const int n)
+{
+  Vector<DT> approximations(n);
+  
+  
+  return approximations;
 }
-*/
+
+
+
+// template < Vector<DT> axbsolver(FullMatrix<DT>, Vector<DT>)>
+// FullMatrix<DT> pdeApproximate(int n, int iterations)
+// {
+  // FullMatrix<DT> newM(n, n);
+
+  // // -------------------insert function here------------------//
+  
+	// return NULL;
+// }
+
 
 const double X_MIN = 0;
 const double Y_MIN = 0;
