@@ -46,7 +46,7 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		
 		///\note deallocates before constructing
 		///\see construct()
-		SymmMatrix<DT>& operator=(const SymmMatrix<DT>& rhs);
+		virtual SymmMatrix<DT>& operator=(const SymmMatrix<DT>& rhs);
 		
 		///\pre DT defines += , matricies align
 		///\post matrix data incremented by rhs matrix
@@ -126,14 +126,8 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		///\pre unallocated m_data
 		///\post allocated m_data and members sized correctly
 		///\param source shows data to be copied to here
-		void construct(const SymmMatrix<DT>& source);
 		template <class MT>
 		void construct(const MatrixBase<MT, DT>& source);
-		
-		///\pre unallocated m_data
-		///\post allocated m_data and members sized correctly
-		///\param source shows data to be copied to here
-		
 };
 
 template <class DT> 

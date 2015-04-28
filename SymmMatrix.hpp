@@ -38,22 +38,11 @@ void SymmMatrix<DT>::construct(const MatrixBase<MT, DT>& source)
 		for (int c=0 ; c<colMax ; c++)
 		{
 			const DT ele = source(r,c);
-			if (ele != source(c,r))
-				throw logic_error("SymmMatrix from non-SymmMatrix impossible");
-			m_data[r][c] = ele ;
+			// if (ele != source(c,r))
+				// throw logic_error("SymmMatrix from non-SymmMatrix impossible");
+			m_data[r][c] = ele;
 		}
 	}
-}
-
-template <class DT>
-void SymmMatrix<DT>::construct(const SymmMatrix<DT>& source)
-{
-	m_rows = source.rows();
-	m_cols = source.cols();
-	m_data = new Vector<DT> [m_rows];
-	
-	for (int r=0 ; r<m_rows ; r++)
-		m_data[r] = source.m_data[r];
 }
 
 template <class T> 
