@@ -7,6 +7,15 @@ using std::logic_error;
 
 #include "FullMatrix.h"
 
+
+template <class DT> 
+inline const DT& FullMatrix<DT>::getValue(unsigned int r, unsigned int c) const
+{ return operator()(r,c); }
+
+template <class DT> 
+inline void FullMatrix<DT>::setValue(unsigned int r, unsigned int c, const DT& value)
+{ operator()(r,c) = value;  }
+
 template <class T> 
 void FullMatrix<T>::row_swap(unsigned int row1, unsigned int row2)
 {

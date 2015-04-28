@@ -129,6 +129,11 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 		// *** A C C E S S   F U N C T I O N S *** //
 		virtual DT& operator()(unsigned int r, unsigned int c);
 		virtual const DT& operator()(unsigned int r, unsigned int c) const;
+    
+    virtual const DT& getValue(unsigned int r, unsigned int c) const;
+    virtual void setValue(unsigned int r, unsigned int c, const DT& value);
+    
+    
 		
 		// Pre: None
 		//Excp: throws out_of_range if index exceeds m_rows

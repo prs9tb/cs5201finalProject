@@ -10,29 +10,17 @@ using std::logic_error;
 
 #include "Vector.h"
 
-template <class T> 
-void SymmMatrix<T>::row_swap(unsigned int row1, unsigned int row2)
-{
-	if (row1 == row2) return;
-	throw logic_error("SymmMatrix row_swap causes invalid state");
-}
 
-template <class T> 
-void SymmMatrix<T>::row_multi(unsigned int row, const T& scalar)
-{
-	if (scalar == 1) return;
-	if (row >= m_rows) 
-		logic_error("SymmMatrix row_multi row off matrix");
-	throw logic_error("SymmMatrix row_multi always causes invalid state");
-}
 
-template <class T> 
-void SymmMatrix<T>::row_multi_add(unsigned int source, const T& scalar, unsigned int dest)
-{
-	if (scalar == 0) return;
-	if (source == dest) return row_multi(dest, scalar+1);
-	throw logic_error("SymmMatrix row_multi_add causes invalid state");
-}
+template <class DT>
+inline const DT& SymmMatrix<DT>::getValue(unsigned int r, unsigned int c) const
+{ return operator()(r,c); }
+
+
+template <class DT>
+inline void SymmMatrix<DT>::setValue(unsigned int r, unsigned int c, const DT& value)
+{  operator()(r,c) = value;  }
+
 
 template <class DT>
 template <class MT>

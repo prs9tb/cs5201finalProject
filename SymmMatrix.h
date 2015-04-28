@@ -7,6 +7,10 @@
 
 #include "Vector.h" // Vector class definition
 #include "MatrixBase.h"// Matrix interface definition
+// #include "LowerTriMatrix.h"
+// #include "UpperTriMatrix.h"
+
+
 
 template <class DT>
 class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
@@ -16,10 +20,12 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
 		///\see construct()
-		SymmMatrix() : SymmMatrix(0,0) {};
+    SymmMatrix()
+    { construct(0,0); };
 		
 		///\see construct()
-		SymmMatrix(const unsigned int dims) : SymmMatrix(dims,dims) {};
+    SymmMatrix(unsigned int dims)
+    { construct(dims, dims);  }
 		
 		///\see construct()
 		SymmMatrix(const unsigned int rows , const unsigned int cols)
@@ -61,29 +67,6 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		///\post matrix data is scaled
 		virtual SymmMatrix<DT>& operator*=(const DT& rhs);
 		
-		// *** M A T R I X   M A N I P U L A T I O N *** //
-		///\pre DT has = 
-		///\post rows are swapped
-		///\throw logic_error on invalid matrix state
-		///\param row1 and row2 int indexes of rows
-		virtual void row_swap(unsigned int row1, unsigned int row2);
-		
-		///\pre DT has = * 
-		///\post row in matrix is scaled
-		///\param row int index
-		///\param DT scalar for multiplication
-		///\throw logic_error on bad row index
-		virtual void row_multi(unsigned int row, const DT& scalar);
-		
-		///\pre DT has +, *, =
-		///\post destination row is increased by scaled source row
-		///\param source: int row index 
-		///\param scalar: DT modifier of source row
-		///\param dest: int row index 
-		///\throw logic_error on invalid matrix state
-		virtual void row_multi_add(unsigned int source, const DT& scalar, unsigned int dest);
-		
-		
 		// *** C A L C U L A T I O N   F U N C T I O N S *** //
 		
 		/// negation math operation, no side effects
@@ -110,6 +93,9 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		///\post shows m_data information or empty matrix space
 		///\throw logic error on bad index
 		virtual const DT& operator()(unsigned int r, unsigned int c) const;
+    
+    virtual const DT& getValue(unsigned int r, unsigned int c) const;
+    virtual void setValue(unsigned int r, unsigned int c, const DT& value);
 		
 	private:
 		Vector<DT> * m_data;

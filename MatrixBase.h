@@ -12,17 +12,16 @@ template <class MT , class DT>
 class MatrixBase
 {
 	public:
-		virtual void getValue(unsigned int row, unsigned int col) const = 0;
-		virtual void setValue(unsigned int row, unsigned int col, const DT& value) const = 0;
+		virtual const DT& getValue(unsigned int row, unsigned int col) const = 0;
+		virtual void setValue(unsigned int row, unsigned int col, const DT& value) = 0;
 		
+    // virtual void construct(const MatrixBase<MT,DT>&) = 0;
+    // virtual void construct(unsigned int rows, unsigned int cols) = 0;
 		
 		virtual const DT& operator()(unsigned int r, unsigned int c) const = 0;
 		virtual DT& operator()(unsigned int r, unsigned int c) = 0;
 		
-		virtual void row_swap(unsigned int row1, unsigned int row2) = 0;
-		virtual void row_multi(unsigned int row, const DT& scalar) = 0;
-		virtual void row_multi_add(unsigned int row1, const DT& scalar, unsigned int row2) = 0;
-		
+    // virtual MT& operator=(const MT& rhs) = 0;
 		virtual MT& operator+=(const MT& other) = 0;
 		virtual MT& operator-=(const MT& other) = 0;
 		virtual MT& operator*=(const DT& other) = 0;

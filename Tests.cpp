@@ -79,14 +79,6 @@ void testSymmMatrixClass()
 	symm = myCopy;
 	assert (symm == myCopy);
 	
-	cout<<"row_multi with 1 test: "<<endl;
-	symm.row_multi(1, 1);
-	assert (symm == myCopy);
-	
-	cout<<"row_multi_add with 0 test..."<<endl;
-	symm.row_multi_add(1, 0, 2);
-	assert(symm == myCopy);
-	
 	SymmMatrix<int> empty3(symm.rows());
 	cout<<"Calc Tests: - itself test..."<<endl;
 	assert (empty3 == (symm - symm));
