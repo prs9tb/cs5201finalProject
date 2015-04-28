@@ -14,7 +14,6 @@ class MatrixBase
 	public:
 		virtual const DT& getValue(unsigned int row, unsigned int col) const = 0;
 		virtual void setValue(unsigned int row, unsigned int col, const DT& value) = 0;
-		
 		virtual const DT& operator()(unsigned int r, unsigned int c) const = 0;
 		virtual DT& operator()(unsigned int r, unsigned int c) = 0;
 		
@@ -28,6 +27,8 @@ class MatrixBase
 		virtual unsigned int cols() const = 0;
 		
 		virtual bool equals(const MT& other) const = 0 ;
+    
+    virtual Vector<DT> solve(const Vector<DT>& b) const = 0;
 };
 
 

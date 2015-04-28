@@ -7,6 +7,16 @@ using std::logic_error;
 
 #include "FullMatrix.h"
 
+template <class DT>
+Vector<DT> FullMatrix<DT>::solve(const Vector<DT>& b) const
+{
+  Vector<DT> result(b.size());
+  // do gaussian elimination
+  return result;
+}
+
+
+
 
 template <class DT> 
 inline const DT& FullMatrix<DT>::getValue(unsigned int r, unsigned int c) const

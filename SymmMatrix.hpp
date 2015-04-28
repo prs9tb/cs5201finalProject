@@ -10,6 +10,19 @@ using std::logic_error;
 
 #include "Vector.h"
 
+template <class DT>
+Vector<DT> SymmMatrix<DT>::solve(const Vector<DT>& b) const
+{
+  Vector<DT> result(b.size());
+  // cholesky decomp
+  // do lower Tri forward sub with b
+  // do upper tri backward sub with b
+  // return result
+  return result;
+}
+
+
+
 
 
 template <class DT>

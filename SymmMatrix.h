@@ -16,6 +16,11 @@ template <class DT>
 class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 {
 	public:
+  
+  
+    virtual Vector<DT> solve(const Vector<DT>& b) const;
+  
+  
 		
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
