@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 5;
+  const int n = 4;
   
   cout<<"genBvec("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
@@ -52,6 +52,15 @@ int main(int argc, char * argv[])
   cout<<"genApdeMatrix("<<n<<") :  "<<endl;
   SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
   cout<<aMatrix<<endl;
+  
+  
+  LowerTriMatrix<double> lower(aMatrix);
+  cout<<"Lower Tri = "<<endl;
+  cout<<lower<<endl;
+  
+  cout<<"Solving for Ax=b : ";
+  Vector<double> xVec = lower.solve(bVec);
+  cout<<xVec<<endl;
   
   return 0;
   
