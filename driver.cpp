@@ -16,6 +16,9 @@
 #include "GlobalFunctions.h"
 #include "Tests.h"
 
+
+#include "GlobalPDE.hpp"
+
 using namespace std;
 
 int main(int argc, char * argv[])
@@ -41,6 +44,12 @@ int main(int argc, char * argv[])
 		filename = "";
 	}
 	
+  cout<<"genBvec = 4:  ";
+  Vector<double> bVec = genBpdeVector(4);
+  cout<<bVec<<endl;
+  
+  return 0;
+  
 	cout<<"Running unit tests ...."<<endl;
 	
 	testVectorClass();

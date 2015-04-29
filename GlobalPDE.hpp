@@ -17,6 +17,15 @@ using namespace std;
 
 
 template <class DT>
+Vector<DT> pdeApproximate(const int n);
+template <class DT>
+SymmMatrix<DT> genApdeMatrix(unsigned int n);
+double poissonAnalytical(double x, double y);
+double poissonEdge(double x, double y);
+Vector<double> genBpdeVector(int n);
+
+
+template <class DT>
 Vector<DT> pdeApproximate(const int n)
 {
   Vector<DT> approximations(n);
@@ -53,17 +62,41 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
   return (aMatrix);
 }
 
-template <class DT>
-Vector<DT> genBpdeVector(unsigned int n)
+Vector<double> genBpdeVector(int n)
 {
-  Vector<DT> bVector(n);
+  Vector<double> bVector((n-1) * (n-1));
   
-  //-------------------insert function here------------------//
+  double deltaX = (X_MAX - X_MIN) / n;
+  double deltaY = (Y_MAX - Y_MIN) / n;
+  int bIndex = 0;
   
-  return (bVector);
-
-
-
+  double left, right, top, bot;
+  double x, y;
+  
+  for (int i=1 ; i<n ; i++)
+  {
+    y = Y_MIN + deltaY * i;
+    for (int j=1 ; j<n ; j++)
+    {
+      x = X_MIN + deltaX * j;
+      left = x - deltaX;
+      right = x + deltaX;
+      top = y + deltaY;
+      bot = y - deltaY;
+      
+      if (left == X_MIN)
+        bVector[bIndex] += poissonEdge(left, y);
+      if (right == X_MAX)
+        bVector[bIndex] += poissonEdge(right, y);
+      if (bot == Y_MIN)
+        bVector[bIndex] += poissonEdge(x, bot);
+      if (top == Y_MAX)
+        bVector[bIndex] += poissonEdge(x, top);
+      bIndex++;
+    }
+  }
+  
+  return bVector;
 }
 
 double poissonEdge(double x, double y)
@@ -77,9 +110,7 @@ double poissonEdge(double x, double y)
 	if (y == Y_MAX)
 		return 0;
 	throw RangeError("x,y is not on poisson edge");
-		
 	return 0;
-	
 }
 
 double poissonAnalytical(double x, double y)
