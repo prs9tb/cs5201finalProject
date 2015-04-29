@@ -5,8 +5,6 @@
 /// File: GlobalFunctions.hpp
 /// Purpose: Global function definitions / implementation
 
-
-#include <iostream>
 using std::istream;
 using std::ostream;
 

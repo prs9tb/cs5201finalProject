@@ -5,6 +5,8 @@
 #ifndef FULL_MATRIX_H
 #define FULL_MATRIX_H
 
+#include <stdexcept>
+
 #include "Vector.h" // Vector class definition
 #include "MatrixBase.h"// Matrix interface definition
 

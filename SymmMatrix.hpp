@@ -5,10 +5,9 @@
 /// File: SymmMatrix.hpp
 /// Purpose: SymmMatrix class function definitions / implementation
 
-#include <stdexcept>
-using std::logic_error;
-
 #include "Vector.h"
+
+using std::logic_error;
 
 template <class DT>
 Vector<DT> SymmMatrix<DT>::solve(const Vector<DT>& b) const

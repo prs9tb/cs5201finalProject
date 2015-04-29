@@ -6,7 +6,6 @@
 /// Purpose: Vector class function definitions / implementation
 
 #include "Vector.h"
-#include <stdexcept>
 
 using std::invalid_argument;
 using std::out_of_range;
