@@ -17,6 +17,7 @@ Vector<T>::Vector(const unsigned int size /* =0 */ )
 {
 	m_size = size;
 	m_ptr_data = new T[size];
+  setAll(T(0));
 }
 
 template <class T>

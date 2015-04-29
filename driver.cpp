@@ -44,9 +44,16 @@ int main(int argc, char * argv[])
 		filename = "";
 	}
 	
-  cout<<"genBvec = 4:  ";
-  Vector<double> bVec = genBpdeVector(4);
+  
+  const int n = 5;
+  
+  cout<<"genBvec("<<n<<"):  "<<endl;
+  Vector<double> bVec = genBpdeVector<double>(n);
   cout<<bVec<<endl;
+  
+  cout<<"genApdeMatrix("<<n<<") :  "<<endl;
+  SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
+  cout<<aMatrix<<endl;
   
   return 0;
   

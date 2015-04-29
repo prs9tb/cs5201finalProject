@@ -21,10 +21,6 @@ Vector<DT> SymmMatrix<DT>::solve(const Vector<DT>& b) const
   return result;
 }
 
-
-
-
-
 template <class DT>
 inline const DT& SymmMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 { return operator()(r,c); }
