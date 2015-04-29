@@ -14,10 +14,8 @@
 #include "FullMatrix.h"
 #include "SymmMatrix.h"
 #include "GlobalFunctions.h"
-#include "Tests.h"
-
-
 #include "GlobalPDE.hpp"
+#include "Tests.h"
 
 using namespace std;
 

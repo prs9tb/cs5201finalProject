@@ -54,18 +54,18 @@ driver: $(OBJECTS) $(LINKS)
 clean:
 	-@rm -f core
 	-@rm -f driver
-	-@rm -f depend
+	-@rm -f .depend
 	-@rm -f driver.exe
 	-@rm -f $(OBJECTS)
 
 
 ########## G E N   D E P E N D E N C I E S ##########
-depend: $(SOURCESCPP) $(HEADERS)
+.depend: $(SOURCESCPP) $(HEADERS)
 	@echo "Generating dependencies..."
 	@$(CXX) -MM *.cpp > $@
 
 
--include depend
+-include .depend
 # Put a dash in front of include when using gnu make.
 # It stops gmake from warning us that the file
 # doesn't exist yet, even though it will be properly

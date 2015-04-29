@@ -2,10 +2,10 @@
 /// Date: 4 - 20 - 2015
 /// Class: CS 5201 (Price) 
 
-#include <stdexcept>
+#include "FullMatrix.h"
+
 using std::logic_error;
 
-#include "FullMatrix.h"
 
 template <class DT>
 Vector<DT> FullMatrix<DT>::solve(const Vector<DT>& b) const

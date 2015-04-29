@@ -1,31 +1,11 @@
 //Abira Das and Patrick Sullivan
-//GlobalPDE.cpp
+//GlobalPDE.hpp
 //functions for generating the A & b matricies
 //of Poisson's equation
 
-
-#include <iostream>
-#include <cmath>
-#include <cstdlib>
-
-#include "RangeError.h"
-#include "Vector.h"
-#include "FullMatrix.h"
-#include "SymmMatrix.h"
+#include "GlobalPDE.h"
 
 using namespace std;
-
-
-template <class MT, class DT>
-Vector<DT> pdeApproximate(const int n);
-template <class DT>
-SymmMatrix<DT> genApdeMatrix(unsigned int n);
-template <class DT>
-Vector<DT> genBpdeVector(int n);
-
-double poissonAnalytical(double x, double y);
-double poissonEdge(double x, double y);
-
 
 template <class MT, class DT>
 Vector<DT> pdeApproximate(const int n)
@@ -39,12 +19,6 @@ Vector<DT> pdeApproximate(const int n)
   
   return approximations;
 }
-
-
-const double X_MIN = 0;
-const double Y_MIN = 0;
-const double X_MAX = M_PI;
-const double Y_MAX = M_PI;
 
 template <class DT>
 SymmMatrix<DT> genApdeMatrix(unsigned int n)

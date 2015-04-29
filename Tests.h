@@ -1,13 +1,16 @@
 
+#ifndef MATRIX_TESTS_H
+#define MATRIX_TESTS_H
+
+#include <iostream>
+#include <assert.h>
+#include <stdexcept>
+
 #include "Vector.h"
 #include "MatrixBase.h"
 #include "FullMatrix.h"
 #include "SymmMatrix.h"
 #include "GlobalFunctions.h"
-
-
-#ifndef MATRIX_TESTS_H
-#define MATRIX_TESTS_H
 
 // void testTriDiagMatrixClass();
 // void testDiagMatrixClass();
