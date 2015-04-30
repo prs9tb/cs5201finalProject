@@ -10,7 +10,7 @@
 #include "Vector.h" // Vector class definition
 #include "MatrixBase.h"// Matrix interface definition
 #include "LowerTriMatrix.h"
-// #include "UpperTriMatrix.h"
+#include "UpperTriMatrix.h"
 
 
 template <class DT>

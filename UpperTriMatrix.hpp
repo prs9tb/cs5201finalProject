@@ -2,114 +2,78 @@
 /// Date: 3 - 15 - 2015
 /// Class: CS 5201 (Price)
 /// Assignment #4: Matrices and Gaussian Elimination
-/// File: LowerTriMatrix.hpp
-/// Purpose: LowerTriMatrix class function definitions / implementation
+/// File: UpperTriMatrix.hpp
+/// Purpose: UpperTriMatrix class function definitions / implementation
 
-#include "LowerTriMatrix.h"
+#include "UpperTriMatrix.h"
 
 using std::logic_error;
 
-/*
-template <class T>
-Array<T> UpperTri<T>::backSub(Array<T> a)
-{
-  T sum = 0;
-  Array<T> answers(m_row);
-  
-  
-  answers[m_row-1] = (a[m_row-1])/(*this)[m_row-1][0];
-  //sets first solution to the last augmented matrix number divided by the
-  //last variable's cofefficient
-
-  cout << "x" << m_row << " is " << answers[m_row-1] << endl;
-
-  for(int i=m_row-2; i >=0; i--) //go through rows
-  {
-    sum = 0;
-    for(int j=i+1; j <m_row; j ++) //sum up cols with known answers
-    {
-      sum += (*this)[i][j-i]*answers[j];    
-    }
-
-    answers[i] = (a[i] - sum)/((*this)[i][0]);
-    if(abs(answers[i]) < 0.000000001)	//round to 0
-    {
-      answers[i] = 0;
-    }
-    cout << "x" << i+1 << " is " << answers[i] << endl;
-  }
-  return(answers);
-}
-*/
-
-
 template <class DT>
-Vector<DT> LowerTriMatrix<DT>::solve(const Vector<DT>& b) const
+Vector<DT> UpperTriMatrix<DT>::solve(const Vector<DT>& b) const
 {
   Vector<DT> result(b.size());
+  const int end = m_rows - 1;
+  // back substitution
   DT sum;
-  result[0] = b[0] / getValue(0,0);
+  result[end] = (b[end])/getValue(end,end);
   
-  // forward substitution
-  for (int row=1 ; row<m_rows ; row++)
+  for (int row=end-1 ; row >=0 ; row--)
   {
     sum = s_zeroElt;
-    for (int col=0 ; col<=row ; col++)
-      sum += getValue(row,col) * result[col];
+    for (int col=row+1 ; col < m_rows ; col++)
+      sum += getValue(row, col) * result[col];
     
-    result[row] = (b[row] - sum) / getValue(row, row);
+    result[row] = (b[row] - sum) / getValue(row,row);
   }
   return result;
 }
 
 template <class DT>
-inline const DT& LowerTriMatrix<DT>::getValue(unsigned int r, unsigned int c) const
+inline const DT& UpperTriMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 { return operator()(r,c); }
 
 
 template <class DT>
-inline void LowerTriMatrix<DT>::setValue(unsigned int r, unsigned int c, const DT& value)
+inline void UpperTriMatrix<DT>::setValue(unsigned int r, unsigned int c, const DT& value)
 {  operator()(r,c) = value;  }
 
 
 template <class DT>
 template <class MT>
-void LowerTriMatrix<DT>::construct(const MatrixBase<MT, DT>& source)
+void UpperTriMatrix<DT>::construct(const MatrixBase<MT, DT>& source)
 {
-	m_rows = source.rows();
-	m_cols = source.cols();
-	m_data = new Vector<DT> [m_rows];
-	
-  int colMax;
-	for (int r=0 ; r<m_rows ; r++)
-	{
-		colMax = (r<m_cols)? r+1 : m_cols;
-		m_data[r].resize(colMax);
-		
-		for (int c=0 ; c<colMax ; c++)
-      m_data[r][c] = source(r,c);
-	}
+  m_rows = source.rows ();
+  m_cols = source.cols ();
+  m_data = new Vector<DT> [m_rows];
+  for (int r = 0 ; r < m_rows ; r++)
+  {
+    const int colMax = (r > m_cols) ? m_cols : m_cols - r ;
+    m_data[r].resize (colMax);
+    for (int c = r ; c < m_cols ; c++)
+      operator () (r, c) = source (r, c);
+  }
 }
 
-template <class T> 
-void LowerTriMatrix<T>::construct(unsigned int rows, unsigned int cols)
+template <class DT> 
+void UpperTriMatrix<DT>::construct(unsigned int rows, unsigned int cols)
 {
 	if (rows != cols)
-		throw logic_error("LowerTriMatrix from non-Square matrix impossible");
-	m_rows = rows;
-	m_cols = cols;
-	m_data = new Vector<T> [m_rows];
-	
-	for (int r=0 ; r<rows ; r++)
-	{
-		const int colMax = (r<m_cols)? r+1 : m_cols;
-		m_data[r].resize(colMax);
-	}
+		throw logic_error("UpperTriMatrix from non-Square matrix impossible");
+  m_rows = rows;
+  m_cols = cols;
+  m_data = new Vector<DT> [m_rows];
+  int colMax;
+  for (int r = 0 ; r < rows ; r++)
+  {
+    colMax = (r > m_cols) ? 0 : m_cols - r ;
+    m_data[r].resize (colMax);
+  }
 }
 
 
 template <class DT>
-LowerTriMatrix<DT>& LowerTriMatrix<DT>::operator=(const LowerTriMatrix<DT>& rhs)
+UpperTriMatrix<DT>& UpperTriMatrix<DT>::operator=(const UpperTriMatrix<DT>& rhs)
 {
 	if (m_data == rhs.m_data) return *this;
 	delete [] m_data;
@@ -119,67 +83,59 @@ LowerTriMatrix<DT>& LowerTriMatrix<DT>::operator=(const LowerTriMatrix<DT>& rhs)
 
 
 template <class T>
-LowerTriMatrix<T>& LowerTriMatrix<T>::operator+=(const LowerTriMatrix<T>& rhs)
+UpperTriMatrix<T>& UpperTriMatrix<T>::operator+=(const UpperTriMatrix<T>& rhs)
 {
 	const int rRows = rhs.rows();
 	const int rCols = rhs.cols();
 	
 	if (m_rows != rRows)
-		throw logic_error("LowerTriMatrix += rows not aligned");
+		throw logic_error("UpperTriMatrix += rows not aligned");
 	if (m_cols != rCols)
-		throw logic_error("LowerTriMatrix += cols not aligned");
+		throw logic_error("UpperTriMatrix += cols not aligned");
 	for (int r=0 ; r<m_rows ; r++)
-		(*this)(r) += rhs(r);
+    m_data[r] += rhs.m_data[r];
+		// (*this)(r) += rhs(r);
 	return *this;
 }
 
 template <class T>
-LowerTriMatrix<T>& LowerTriMatrix<T>::operator-=(const LowerTriMatrix<T>& rhs)
+UpperTriMatrix<T>& UpperTriMatrix<T>::operator-=(const UpperTriMatrix<T>& rhs)
 {
 	const int rRows = rhs.rows();
 	const int rCols = rhs.cols();
 	if (m_rows != rRows)
-		throw logic_error("LowerTriMatrix -= rows not aligned");
+		throw logic_error("UpperTriMatrix -= rows not aligned");
 	if (m_cols != rCols)
-		throw logic_error("LowerTriMatrix -= cols not aligned");
+		throw logic_error("UpperTriMatrix -= cols not aligned");
 	for (int r=0 ; r<m_rows ; r++)
-		operator()(r) -= rhs(r);
+    m_data[r] -= rhs.m_data[r];
+		// operator()(r) -= rhs(r);
 	return *this;
 }
 
-
 template <class T>
-LowerTriMatrix<T>& LowerTriMatrix<T>::operator*=(const LowerTriMatrix<T>& rhs)
-{
-	throw logic_error("LowerTriMatrix *= not possible");
-	delete [] m_data;
-	construct(rhs);
-	return *this;
-}
-
-
-template <class T>
-LowerTriMatrix<T>& LowerTriMatrix<T>::operator*=(const T& rhs)
+UpperTriMatrix<T>& UpperTriMatrix<T>::operator*=(const T& rhs)
 {
 	for (int r=0 ; r<m_rows ; r++)
-		(*this)(r) *= rhs;
+    m_data[r] *= rhs;
+		// (*this)(r) *= rhs;
 	return *this;
 }
 
 template <class T>
-const LowerTriMatrix<T> LowerTriMatrix<T>::operator-() const
+const UpperTriMatrix<T> UpperTriMatrix<T>::operator-() const
 {
-	LowerTriMatrix<T> result(*this);
+	UpperTriMatrix<T> result(*this);
 	result *= -1;
 	return result;
 }
 
 template <class T>
-const Vector<T> LowerTriMatrix<T>::operator*(const Vector<T>& rhs) const
+const Vector<T> UpperTriMatrix<T>::operator*(const Vector<T>& rhs) const
 {
 	const int rSize = rhs.size();
 	if (m_rows != rSize)
-		throw logic_error("LowerTriMatrix * vector row and size not aligned");
+		throw logic_error("UpperTriMatrix * vector row and size not aligned");
 	Vector<T> result(rSize);
 	for (int c=0 ; c<m_cols ; c++)
 		for (int r=0 ; r<m_rows ; r++)
@@ -187,24 +143,25 @@ const Vector<T> LowerTriMatrix<T>::operator*(const Vector<T>& rhs) const
 	return result;
 }
 
+/*
 template <class T>
-const Vector<T>& LowerTriMatrix<T>::operator()(unsigned int row) const 
+const Vector<T>& UpperTriMatrix<T>::operator()(unsigned int row) const 
 {
 	if (m_rows <= row)
-		throw logic_error("LowerTriMatrix (row) const off matrix");
+		throw logic_error("UpperTriMatrix (row) const off matrix");
 	return m_data[row];
 }
 template <class T>
-Vector<T>& LowerTriMatrix<T>::operator()(unsigned int row) 
+Vector<T>& UpperTriMatrix<T>::operator()(unsigned int row) 
 {
 	if (m_rows <= row)
-		throw logic_error("LowerTriMatrix (row) reference off matrix");
+		throw logic_error("UpperTriMatrix (row) reference off matrix");
 	return m_data[row]; 
 }
-
+*/
 
 template <class DT>
-bool LowerTriMatrix<DT>::equals(const LowerTriMatrix<DT>& other) const
+bool UpperTriMatrix<DT>::equals(const UpperTriMatrix<DT>& other) const
 {
 	if (m_rows != other.m_rows) return false;
 	if (m_cols != other.m_cols) return false;
@@ -218,31 +175,31 @@ bool LowerTriMatrix<DT>::equals(const LowerTriMatrix<DT>& other) const
 
 
 template <class T>
-inline const T& LowerTriMatrix<T>::operator()(unsigned int r, unsigned int c) const 
+inline const T& UpperTriMatrix<T>::operator()(unsigned int r, unsigned int c) const 
 {
 	return constAccess(r,c);
 }
 
 template <class T>
-inline T& LowerTriMatrix<T>::operator()(unsigned int r, unsigned int c) 
+inline T& UpperTriMatrix<T>::operator()(unsigned int r, unsigned int c) 
 {
 	if (r >= m_rows)
-		throw logic_error("LowerTriMatrix (r,c) reference row off matrix");
+		throw logic_error("UpperTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
-		throw logic_error("LowerTriMatrix (r,c) reference col off matrix");
-  if (r < c)
-    throw logic_error("LowerTriMatrix (r,c) reference to restrited area");
-  return m_data[r][c];
+		throw logic_error("UpperTriMatrix (r,c) reference col off matrix");
+  if (r > c)
+    throw logic_error("UpperTriMatrix (r,c) reference to restrited area");
+  return m_data[r][c - r];
 }
 
 template <class T>
-inline const T& LowerTriMatrix<T>::constAccess(unsigned int r, unsigned int c) const
+inline const T& UpperTriMatrix<T>::constAccess(unsigned int r, unsigned int c) const
 {
 	if (r >= m_rows)
-		throw logic_error("LowerTriMatrix (r,c) reference row off matrix");
+		throw logic_error("UpperTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
-		throw logic_error("LowerTriMatrix (r,c) reference col off matrix");
-  if (r < c)
+		throw logic_error("UpperTriMatrix (r,c) reference col off matrix");
+  if (r > c)
     return s_zeroElt;
-  return m_data[r][c];
+  return m_data[r][c - r];
 }
