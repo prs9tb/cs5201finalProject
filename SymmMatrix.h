@@ -6,6 +6,7 @@
 #define SYMM_MATRIX_H
 
 #include <stdexcept>
+#include <cmath>
 
 #include "Vector.h" // Vector class definition
 #include "MatrixBase.h"// Matrix interface definition

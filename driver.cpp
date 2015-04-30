@@ -54,12 +54,14 @@ int main(int argc, char * argv[])
   cout<<aMatrix<<endl;
   
   
-  UpperTriMatrix<double> upper(aMatrix);
-  cout<<"Upper Tri = "<<endl;
-  cout<<upper<<endl;
   
+  
+  // UpperTriMatrix<double> upper(aMatrix);
+  // cout<<"Upper Tri = "<<endl;
+  // cout<<upper<<endl;
+  
+  Vector<double> xVec = aMatrix.solve(bVec);
   cout<<"Solving for Ax=b : ";
-  Vector<double> xVec = upper.solve(bVec);
   cout<<xVec<<endl;
   
   return 0;
