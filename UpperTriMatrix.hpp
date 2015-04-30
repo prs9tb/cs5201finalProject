@@ -9,6 +9,40 @@
 
 using std::logic_error;
 
+/*
+template <class T>
+Array<T> UpperTri<T>::backSub(Array<T> a)
+{
+  T sum = 0;
+  Array<T> answers(m_row);
+  
+  
+  answers[m_row-1] = (a[m_row-1])/(*this)[m_row-1][0];
+  //sets first solution to the last augmented matrix number divided by the
+  //last variable's cofefficient
+
+  cout << "x" << m_row << " is " << answers[m_row-1] << endl;
+
+  for(int i=m_row-2; i >=0; i--) //go through rows
+  {
+    sum = 0;
+    for(int j=i+1; j <m_row; j ++) //sum up cols with known answers
+    {
+      sum += (*this)[i][j-i]*answers[j];    
+    }
+
+    answers[i] = (a[i] - sum)/((*this)[i][0]);
+    if(abs(answers[i]) < 0.000000001)	//round to 0
+    {
+      answers[i] = 0;
+    }
+    cout << "x" << i+1 << " is " << answers[i] << endl;
+  }
+  return(answers);
+}
+*/
+
+
 template <class DT>
 Vector<DT> LowerTriMatrix<DT>::solve(const Vector<DT>& b) const
 {
