@@ -16,6 +16,7 @@
 #include "GlobalPDE.h"
 #include "Tests.h"
 #include "SubstitutionSolver.h"
+#include "GaussianSolver.h"
 
 using namespace std;
 
