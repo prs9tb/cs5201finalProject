@@ -95,6 +95,34 @@ Vector<DT> genBpdeVector(int n)
   return bVector;
 }
 
+template <class DT>
+Vector<DT> testApprox(const Vector<DT>& approx)
+{
+  const int size = approx.size();
+  const int n = sqrt(size) + 1;
+  
+  Vector<double> analyticalAnswers(size);
+  double x = M_PI/n;    //set x and y
+  double y = M_PI/n;
+  int ans =0;
+  
+  for(int i =0; i < (n-1) ; i ++)
+  {
+    for(int j =0; j < (n-1); j ++)
+    { 
+      analyticalAnswers[ans] = poissonAnalytical(x, y);
+      x += M_PI/n;
+      ans ++;
+    }
+    x = M_PI/n;   //bring x back to front
+    y += M_PI/n;  //increase y
+  }
+  
+  Vector<DT> errorVec = analyticalAnswers - approx;
+  return errorVec;
+}
+
+
 double poissonEdge(double x, double y)
 {
 	if (x == X_MIN)

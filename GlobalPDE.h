@@ -28,6 +28,8 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n);
 template <class DT>
 Vector<DT> genBpdeVector(int n);
 
+template <class DT>
+Vector<DT> testApprox(const Vector<DT>& approx);
 
 double poissonAnalytical(double x, double y);
 

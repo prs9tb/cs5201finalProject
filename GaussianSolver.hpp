@@ -16,6 +16,9 @@ Vector<DT> GaussianSolver<DT>::operator()(FullMatrix<DT>& a, Vector<DT>& b) cons
 {
   const DT zero (0);
   const DT one (1);
+  Vector<DT> result = b;
+  
+  
   if (a.rows () != b.size ())
     throw SizeError("FullMatrix and Vector cannot combine into augmented FullMatrix");
   if (DEBUG)
@@ -23,23 +26,23 @@ Vector<DT> GaussianSolver<DT>::operator()(FullMatrix<DT>& a, Vector<DT>& b) cons
   for (int diag = 0 ; diag < a.rows () ; diag++)
   {
     int pivotRow = getPivotRow (a, diag);
-    a.row_swap (diag, pivotRow);
-    b.swapEle (diag, pivotRow);
+    rowSwap(a, diag, pivotRow);
+    result.swapEle (diag, pivotRow);
     if (DEBUG)
       cout<<"******* Pivoted :"<<endl<<a<<endl;
     //scalar multiply row to make diag = 1
     DT scalar = 1.0 / a (diag, diag);
-    a.row_multi (diag, scalar);
-    b[diag] *= scalar;
-    // if (DEBUG)
-    // cout<<"*******Diag Scaled:"<<endl<<a<<endl;
+    rowMulti(a, diag, scalar);
+    // a.row_multi (diag, scalar);
+    result[diag] *= scalar;
     tolCheck (a (diag, diag), one);
     for (int clrR = diag + 1 ; clrR < a.rows () ; clrR++)
     {
       //scale row and add to others to zero column below
       scalar = -a (clrR, diag);
-      a.row_multi_add (diag, scalar, clrR);
-      b[clrR] += scalar * b[diag];
+      rowMultiAdd(a, diag, scalar, clrR);
+      // a.row_multi_add (diag, scalar, clrR);
+      result[clrR] += scalar * result[diag];
       tolCheck (a (clrR, diag), zero);
     }
     if (DEBUG)
@@ -56,13 +59,17 @@ Vector<DT> GaussianSolver<DT>::operator()(FullMatrix<DT>& a, Vector<DT>& b) cons
     for (int clrR = diag - 1 ; clrR >= 0 ; clrR--)
     {
       DT scalar = -a (clrR, diag);
-      a.row_multi_add (diag, scalar, clrR);
-      b[clrR] += b[diag] * scalar;
+      rowMultiAdd(a, diag, scalar, clrR);
+      // a.row_multi_add (diag, scalar, clrR);
+      result[clrR] += result[diag] * scalar;
       tolCheck (a (clrR, diag), zero);
     }
   }
   if (DEBUG)
     cout << "&&&&&&&&&&&& End: &&&&&&&&&&&&&&" << endl << a << endl;
+    
+  cout<<a<<endl;
+  return result;
 }
 
 
