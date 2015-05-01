@@ -3,11 +3,10 @@
 //GaussianSolver.hpp
 //implementations for the SubstitutionSolver.h file
 
-
-#include <iostream>
+#include "GaussianSolver.h"
 
 template <class DT>
-Vector<DT> GaussianSolver::operator()(FullMatrix<DT>& a, Vector<DT>& b)
+Vector<DT> GaussianSolver<DT>::operator()(FullMatrix<DT>& a, Vector<DT>& b)
 {
 
 

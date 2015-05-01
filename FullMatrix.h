@@ -14,10 +14,6 @@ template <class DT>
 class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 {
 	public:
-		
-    virtual Vector<DT> solve(const Vector<DT>& b) const;
-    
-    
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
 		///\see construct()
@@ -88,27 +84,6 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 		//Desc: scalar-FullMatrix multiplication operaton
 		virtual FullMatrix<DT>& operator*=(const DT& rhs);
 		
-		// *** M A T R I X   M A N I P U L A T I O N *** //
-		///\pre DT has = 
-		///\post rows are swapped
-		///\throw logic_error on invalid matrix state
-		///\param row1 and row2 int indexes of rows
-		virtual void row_swap(unsigned int row1, unsigned int row2);
-		
-		///\pre DT has = * 
-		///\post row in matrix is scaled
-		///\param row int index
-		///\param DT scalar for multiplication
-		///\throw logic_error on bad row index
-		virtual void row_multi(unsigned int row, const DT& scalar);
-		
-		///\pre DT has +, *, =
-		///\post destination row is increased by scaled source row
-		///\param source: int row index 
-		///\param scalar: DT modifier of source row
-		///\param dest: int row index 
-		///\throw logic_error on invalid matrix state
-		virtual void row_multi_add(unsigned int source, const DT& scalar, unsigned int dest);
 		
 		// *** C A L C U L A T I O N   F U N C T I O N S *** //
 		
