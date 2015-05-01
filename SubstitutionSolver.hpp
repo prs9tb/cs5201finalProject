@@ -3,7 +3,7 @@
 //SubstitutionSolver.hpp
 //implementations for the SubstitutionSolver.h file
 
-#include "SubstitutionSolver.h"
+//#include "SubstitutionSolver.h"
 
 
 template <class DT>
