@@ -9,6 +9,7 @@
 
 #include "Vector.h" // Vector class definition
 #include "MatrixBase.h"// Matrix interface definition
+#include "UpperTriMatrix.h" //Upper Triangular matrix definition
 
 template <class DT>
 class LowerTriMatrix : public virtual MatrixBase<LowerTriMatrix<DT> , DT>
@@ -77,6 +78,12 @@ class LowerTriMatrix : public virtual MatrixBase<LowerTriMatrix<DT> , DT>
 		///\post dot product of matrix and rhs given
 		///\param rhs : const Vector<DT> operand
 		const Vector<DT> operator*(const Vector<DT>& rhs) const;
+    
+    
+    ///\pre Upper Triangular matrix class is written and defined
+		///\post returns transpose of lower tri as upper tri
+		///\param none
+    const UpperTriMatrix<DT> transpose()const;
 		
 		// *** A C C E S S   F U N C T I O N S *** //
 		
