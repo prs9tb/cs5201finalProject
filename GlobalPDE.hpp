@@ -7,15 +7,21 @@
 
 using namespace std;
 
-template <class MT, class DT>
-Vector<DT> pdeApproximate(const int n)
+// HOW TO CALL::::
+// approx = pdeApproxmate<DataType, MatrixType>(n, solver);
+
+template <class DT, class MT, class ST>
+Vector<DT> pdeApproximate(const int n, const ST& solver)
 {
   const int size = (n-1) * (n-1);
   Vector<DT> approximations(size);
   
   Vector<DT> bVector = genBpdeVector<DT>(n);
+  
   SymmMatrix<DT> aSymmMatrix = genApdeMatrix<DT>(n);
   MT aMatrix(aSymmMatrix);
+  
+  approximations = solver(aMatrix, bVector);
   
   return approximations;
 }

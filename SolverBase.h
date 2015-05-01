@@ -7,7 +7,10 @@
 #ifndef SOLVER_BASE_H
 #define SOLVER_BASE_H
 
-template <class MT, DT>
+#include "Vector.h"
+
+
+template <class MT, class DT>
 class SolverBase
 {
   public:
