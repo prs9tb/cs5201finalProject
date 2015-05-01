@@ -1,4 +1,4 @@
-/// Programmer: Abira Das
+/// Programmer: Abira Das, Patrick Sullivan
 /// Class: CS 5201 (Price)
 /// File: CholeskySolver.h
 /// Purpose: Substitution solver class for Upper and Lower

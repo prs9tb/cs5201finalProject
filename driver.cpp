@@ -17,6 +17,7 @@
 #include "Tests.h"
 #include "SubstitutionSolver.h"
 #include "GaussianSolver.h"
+#include "CholeskySolver.h"
 
 using namespace std;
 
@@ -44,7 +45,7 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 6;
+  const int n = 4;
   
   cout<<"genBvec("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
@@ -55,16 +56,17 @@ int main(int argc, char * argv[])
   cout<<aMatrix<<endl;
   
   SubstitutionSolver<double> subSolver;
-  
+  CholeskySolver<double> cholesky;
   
   
   
   LowerTriMatrix<double> lower(aMatrix);
   cout<<"lower Tri = "<<endl;
   cout<<lower<<endl;
-  cout << "Answer: " << endl;
-  cout << subSolver( lower, bVec) << endl;
   
+  cout << "Cholesky decomposition: " << endl;
+  cout << cholesky(aMatrix, bVec) << endl;
+
   
   /*
   Vector<double> xVec = aMatrix.solve(bVec);

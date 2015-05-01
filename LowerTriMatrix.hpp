@@ -134,6 +134,23 @@ const Vector<T> LowerTriMatrix<T>::operator*(const Vector<T>& rhs) const
 	return result;
 }
 
+template <class DT>
+const UpperTriMatrix<DT> LowerTriMatrix<DT>::transpose()const
+{
+  UpperTriMatrix<DT> upper(m_rows, m_cols);
+  DT value;
+  for(int i =0 ; i < m_rows; i ++)
+  {
+    for(int j =0; j <= i ; j ++) 
+    {
+      //std::cout << i << " " << j << std::endl;
+      value = getValue(i,j);
+      upper.setValue(j, i, value);
+    }  
+  }
+  return(upper);
+}
+
 template <class T>
 const Vector<T>& LowerTriMatrix<T>::operator()(unsigned int row) const 
 {
