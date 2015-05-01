@@ -10,25 +10,6 @@
 using std::logic_error;
 
 template <class DT>
-Vector<DT> LowerTriMatrix<DT>::solve(const Vector<DT>& b) const
-{
-  Vector<DT> result(b.size());
-  DT sum;
-  result[0] = b[0] / getValue(0,0);
-  
-  // forward substitution
-  for (int row=1 ; row<m_rows ; row++)
-  {
-    sum = s_zeroElt;
-    for (int col=0 ; col<=row ; col++)
-      sum += getValue(row,col) * result[col];
-    
-    result[row] = (b[row] - sum) / getValue(row, row);
-  }
-  return result;
-}
-
-template <class DT>
 inline const DT& LowerTriMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 { return operator()(r,c); }
 

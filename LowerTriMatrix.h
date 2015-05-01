@@ -16,8 +16,6 @@ class LowerTriMatrix : public virtual MatrixBase<LowerTriMatrix<DT> , DT>
 	public:
   
   
-    virtual Vector<DT> solve(const Vector<DT>& b) const;
-  
   
 		
 		// *** ( D E - ) C O N S T R U C T O R S *** //
