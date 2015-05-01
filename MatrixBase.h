@@ -27,8 +27,6 @@ class MatrixBase
 		virtual unsigned int cols() const = 0;
 		
 		virtual bool equals(const MT& other) const = 0 ;
-    
-    // virtual Vector<DT> solve(const Vector<DT>& b) const = 0;
 };
 
 

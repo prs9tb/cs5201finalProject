@@ -5,58 +5,9 @@
 /// File: SymmMatrix.hpp
 /// Purpose: SymmMatrix class function definitions / implementation
 
-#include "Vector.h"
+#include "SymmMatrix.h"
 
 using std::logic_error;
-using std::sqrt;
-using std::pow;
-
-template <class DT>
-Vector<DT> SymmMatrix<DT>::solve(const Vector<DT>& b) const
-{
-  const int dim = b.size();
-  Vector<DT> result(dim);
-  
-  LowerTriMatrix<DT> lower(dim, dim);
-  
-  for (int kRow = 0 ; kRow < dim ; kRow ++)
-  {
-    for (int iCol = 0 ; iCol <= kRow ; iCol++)
-    {
-      if (kRow == iCol)
-      {
-        //// Fig 11.4
-        DT ele = getValue(kRow, kRow);
-        for (int jCol = 0 ; jCol < kRow ; jCol++)
-          ele -= pow (lower (kRow, jCol) , 2.0);
-        ele = sqrt (ele);
-        lower (kRow, kRow) = ele;
-      }
-      else
-      {
-        //// Fig 11.3
-        DT ele = getValue(kRow, iCol);
-        for (int jCol = 0 ; jCol < iCol ; jCol++)
-          ele -= lower (iCol, jCol) * lower (kRow, jCol);
-        ele = ele / lower(iCol, iCol);
-        lower (kRow, iCol) = ele;
-      }
-    }
-  }
-  
-  std::cout<<lower<<std::endl;
-  
-  
-  // cholesky decomp
-  // do lower Tri forward sub with b
-  // do upper tri backward sub with b
-  // return result
-  
-  
-  
-  
-  return result;
-}
 
 template <class DT>
 inline const DT& SymmMatrix<DT>::getValue(unsigned int r, unsigned int c) const

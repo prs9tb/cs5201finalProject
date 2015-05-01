@@ -6,18 +6,6 @@
 
 using std::logic_error;
 
-
-template <class DT>
-Vector<DT> FullMatrix<DT>::solve(const Vector<DT>& b) const
-{
-  Vector<DT> result(b.size());
-  // do gaussian elimination
-  return result;
-}
-
-
-
-
 template <class DT> 
 inline const DT& FullMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 { return operator()(r,c); }
@@ -25,25 +13,6 @@ inline const DT& FullMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 template <class DT> 
 inline void FullMatrix<DT>::setValue(unsigned int r, unsigned int c, const DT& value)
 { operator()(r,c) = value;  }
-
-template <class T> 
-void FullMatrix<T>::row_swap(unsigned int row1, unsigned int row2)
-{
-	(*this)(row1).swap((*this)(row2));
-}
-
-template <class T> 
-void FullMatrix<T>::row_multi(unsigned int row, const T& scalar)
-{
-	(*this)(row) *= scalar;
-}
-
-template <class T> 
-void FullMatrix<T>::row_multi_add(unsigned int source, const T& scalar, unsigned int dest)
-{
-	(*this)(dest) += (*this)(source) * scalar;
-}
-
 
 template <class DT> 
 void FullMatrix<DT>::construct(unsigned int rows, unsigned int cols)

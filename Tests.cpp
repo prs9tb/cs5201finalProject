@@ -147,22 +147,6 @@ void testFullMatrixClass()
 		cout<<" Caught!"<<endl;
 	}
 	
-	cout<<"row_multi by 1 test..."<<endl;
-	myCopy.row_multi(1,1);
-	assert(myCopy== rect);
-	
-	cout<<"row_multi_add with 0 test..."<<endl;
-	rect.row_multi_add(1, 0, 2);
-	assert(rect == myCopy);
-	
-	cout<<"row_multi_add(2,3,3) = "<<endl;
-	myCopy.row_multi_add(2,2,3);
-	cout<<myCopy<<endl;
-	
-	cout<<"row_multi_add(3,0,1) = "<<endl;
-	myCopy.row_multi_add(3,0,1);
-	cout<<myCopy<<endl;
-	
 	testCalcOps(myCopy);
 	
 	cout<<"FullMatrix tests done!"<<endl;
