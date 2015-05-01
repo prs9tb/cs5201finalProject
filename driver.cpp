@@ -1,9 +1,8 @@
-/// Programmer: Patrick Sullivan
-/// Date: 3 - 15 - 2015
+/// Programmer: Patrick Sullivan, Abira Das
+/// Date: 5/1/15
 /// Class: CS 5201 (Price)
-/// Assignment #4: Matrices and Gaussian Elimination
 /// File: driver.cpp
-/// Purpose: main program for testing FullMatrix and Vector
+/// Purpose: main program for testing Cholesky and Gaussian on Poisson's Equation
 
 #include <iostream>
 #include <fstream>
@@ -16,6 +15,7 @@
 #include "GlobalFunctions.h"
 #include "GlobalPDE.hpp"
 #include "Tests.h"
+#include "SubstitutionSolver.h"
 
 using namespace std;
 
@@ -53,16 +53,46 @@ int main(int argc, char * argv[])
   SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
   cout<<aMatrix<<endl;
   
+  SubstitutionSolver<double> subSolver;
   
   
   
-  // UpperTriMatrix<double> upper(aMatrix);
-  // cout<<"Upper Tri = "<<endl;
-  // cout<<upper<<endl;
+  
+  UpperTriMatrix<double> upper(aMatrix);
+  cout<<"Upper Tri = "<<endl;
+  cout<<upper<<endl;
+  
+  cout << subSolver( upper, bVec) << endl;
+  
+  
   
   Vector<double> xVec = aMatrix.solve(bVec);
   cout<<"Solving for Ax=b : ";
   cout<<xVec<<endl;
+  
+  
+  //----------------analytical solution--------------------//
+  
+  Vector<double> analyticalAnswers((n-1)*(n-1));
+  double x = M_PI/n;    //set x and y
+  double y = M_PI/n;
+  int ans =0;
+   
+  for(int i =0; i < (n-1) ; i ++)
+  {
+    for(int j =0; j < (n-1); j ++)
+    { 
+      analyticalAnswers[ans] = poissonAnalytical(x, y);
+      x += M_PI/n;
+      ans ++;
+    }
+    x = M_PI/n;   //bring x back to front
+    y += M_PI/n;  //increase y
+  }
+  
+  cout << analyticalAnswers << endl;
+  
+  
   
   return 0;
   
