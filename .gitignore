@@ -33,3 +33,4 @@
 depend
 driver
 *.dia~
+*.dia.autosave

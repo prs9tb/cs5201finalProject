@@ -14,7 +14,8 @@
 
 
 template <class DT>
-class SubstitutionSolver
+class SubstitutionSolver : public virtual SolverBase<LowerTriMatrix<DT>, DT> ,
+                           public virtual SolverBase<UpperTriMatrix<DT>, DT>
 {
   public:
     SubstitutionSolver() {}
