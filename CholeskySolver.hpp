@@ -6,11 +6,9 @@
 #include "CholeskySolver.h"
 
 template <class DT>
-Vector<DT> CholeskySolver<DT>::operator()(LowerTriMatrix<DT>& a, Vector<DT>& b)
+inline Vector<DT> CholeskySolver<DT>::operator()(LowerTriMatrix<DT>& a, Vector<DT>& b)
 {
   Vector<DT> result(b.size());
-  
-  
   
   
   
