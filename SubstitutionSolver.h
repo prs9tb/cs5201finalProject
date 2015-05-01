@@ -8,7 +8,10 @@
 #ifndef SUBSTITUTIONSOLVER_H
 #define SUBSTITUTIONSOLVER_H
 
+#include <iostream>
+
 #include "SolverBase.h"
+#include "Vector.h"
 #include "UpperTriMatrix.h"
 #include "LowerTriMatrix.h"
 

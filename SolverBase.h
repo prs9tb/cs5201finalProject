@@ -9,13 +9,11 @@
 
 #include "Vector.h"
 
-
 template <class MT, class DT>
 class SolverBase
 {
   public:
     virtual Vector<DT> operator()(MT& a, Vector<DT>& b)=0;
 };
-
 
 #endif

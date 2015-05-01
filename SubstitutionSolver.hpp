@@ -5,7 +5,6 @@
 
 #include "SubstitutionSolver.h"
 
-#include <iostream>
 
 template <class DT>
 Vector<DT> SubstitutionSolver<DT>::operator()(LowerTriMatrix<DT>& a, Vector<DT>& b)
