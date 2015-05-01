@@ -21,7 +21,7 @@ class GaussianSolver : public virtual SolverBase<FullMatrix<DT>, DT>
 {
   public:
     GaussianSolver() {}
-    Vector<DT> operator()(FullMatrix<DT>& a, Vector<DT>& b) const;
+    virtual Vector<DT> operator()(FullMatrix<DT>& a, Vector<DT>& b) const;
     
   private:
     int getPivotRow (const FullMatrix<DT> &a, const unsigned int diag) const;

@@ -19,7 +19,7 @@ class CholeskySolver : public virtual SolverBase<SymmMatrix<DT>, DT>
 {
   public:
     CholeskySolver() {}
-    Vector<DT> operator()(SymmMatrix<DT>& a, Vector<DT>& b) const;
+    virtual Vector<DT> operator()(SymmMatrix<DT>& a, Vector<DT>& b) const;
 };
 
 #include "CholeskySolver.hpp"

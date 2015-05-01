@@ -13,7 +13,7 @@ template <class MT, class DT>
 class SolverBase
 {
   public:
-    virtual Vector<DT> operator()(MT& a, Vector<DT>& b)=0;
+    virtual Vector<DT> operator()(MT& a, Vector<DT>& b) const = 0;
 };
 
 #endif

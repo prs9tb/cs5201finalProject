@@ -22,8 +22,8 @@ class SubstitutionSolver : public virtual SolverBase<LowerTriMatrix<DT>, DT> ,
 {
   public:
     SubstitutionSolver() {}
-    Vector<DT> operator()(LowerTriMatrix<DT>& a, Vector<DT>& b);
-    Vector<DT> operator()(UpperTriMatrix<DT>& a, Vector<DT>& b);
+    virtual Vector<DT> operator()(LowerTriMatrix<DT>& a, Vector<DT>& b) const;
+    virtual Vector<DT> operator()(UpperTriMatrix<DT>& a, Vector<DT>& b) const;
 };
 
 
