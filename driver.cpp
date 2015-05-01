@@ -13,7 +13,7 @@
 #include "FullMatrix.h"
 #include "SymmMatrix.h"
 #include "GlobalFunctions.h"
-#include "GlobalPDE.hpp"
+#include "GlobalPDE.h"
 #include "Tests.h"
 #include "SubstitutionSolver.h"
 

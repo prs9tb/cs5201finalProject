@@ -17,7 +17,7 @@ template <class DT>
 class SubstitutionSolver
 {
   public:
-    SubstitutionSolver();
+    SubstitutionSolver() {}
     Vector<DT> operator()(LowerTriMatrix<DT>& a, Vector<DT>& b);
     Vector<DT> operator()(UpperTriMatrix<DT>& a, Vector<DT>& b);
 };

@@ -34,5 +34,8 @@ double poissonAnalytical(double x, double y);
 
 double poissonEdge(double x, double y);
 
+
+#include "GlobalPDE.hpp"
+
 #endif
 

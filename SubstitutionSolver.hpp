@@ -3,6 +3,8 @@
 //SubstitutionSolver.hpp
 //implementations for the SubstitutionSolver.h file
 
+#include "SubstitutionSolver.h"
+
 #include <iostream>
 
 template <class DT>
