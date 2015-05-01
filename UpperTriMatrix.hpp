@@ -10,26 +10,6 @@
 using std::logic_error;
 
 template <class DT>
-Vector<DT> UpperTriMatrix<DT>::solve(const Vector<DT>& b) const
-{
-  Vector<DT> result(b.size());
-  const int end = m_rows - 1;
-  // back substitution
-  DT sum;
-  result[end] = (b[end])/getValue(end,end);
-  
-  for (int row=end-1 ; row >=0 ; row--)
-  {
-    sum = s_zeroElt;
-    for (int col=row+1 ; col < m_rows ; col++)
-      sum += getValue(row, col) * result[col];
-    
-    result[row] = (b[row] - sum) / getValue(row,row);
-  }
-  return result;
-}
-
-template <class DT>
 inline const DT& UpperTriMatrix<DT>::getValue(unsigned int r, unsigned int c) const
 { return operator()(r,c); }
 

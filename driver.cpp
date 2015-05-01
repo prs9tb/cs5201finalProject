@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 4;
+  const int n = 6;
   
   cout<<"genBvec("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
@@ -58,18 +58,18 @@ int main(int argc, char * argv[])
   
   
   
-  UpperTriMatrix<double> upper(aMatrix);
-  cout<<"Upper Tri = "<<endl;
-  cout<<upper<<endl;
+  LowerTriMatrix<double> lower(aMatrix);
+  cout<<"lower Tri = "<<endl;
+  cout<<lower<<endl;
+  cout << "Answer: " << endl;
+  cout << subSolver( lower, bVec) << endl;
   
-  cout << subSolver( upper, bVec) << endl;
   
-  
-  
+  /*
   Vector<double> xVec = aMatrix.solve(bVec);
   cout<<"Solving for Ax=b : ";
   cout<<xVec<<endl;
-  
+  */
   
   //----------------analytical solution--------------------//
   
@@ -90,6 +90,7 @@ int main(int argc, char * argv[])
     y += M_PI/n;  //increase y
   }
   
+  cout << "Analytical answers for n = " << n << ":" << endl;
   cout << analyticalAnswers << endl;
   
   
