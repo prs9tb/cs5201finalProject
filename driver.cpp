@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cmath>
 
 #include "Vector.h"
 #include "MatrixBase.h"
@@ -45,7 +46,8 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 15;
+  const int n = 40;
+  
   
   cout<<"genBvec("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
@@ -83,7 +85,28 @@ int main(int argc, char * argv[])
   
   //----------------analytical solution--------------------//
   
-  cout<<"Error: "<<testApprox(xVecCholesky)<<endl;
+  
+  Vector<double> errorVec = testApprox(xVecGauss);
+  
+  
+  const int size = std::sqrt(errorVec.size());
+  
+  
+  FullMatrix<double> errorMatrix(size, size);
+  
+  for (int r=0 ; r<size; r++)
+    for (int c=0 ; c<size ; c++)
+    {
+        double val = errorVec[r*c + c];
+        errorMatrix(r,c) = val;
+    }
+    
+  cout<<"Error Matrix : "<<endl;
+  cout<<errorMatrix<<endl;
+  
+  
+  
+  // cout<<"Error: "<<testApprox(xVecCholesky)<<endl;
   
   
   return 0;

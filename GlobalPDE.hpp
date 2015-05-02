@@ -92,6 +92,7 @@ Vector<DT> genBpdeVector(int n)
     }
   }
   
+  bVector *= 0.25;
   return bVector;
 }
 
