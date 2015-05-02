@@ -92,7 +92,7 @@ Vector<DT> genBpdeVector(int n)
     }
   }
   
-  return bVector;
+  return (0.25 * bVector);
 }
 
 double poissonEdge(double x, double y)
