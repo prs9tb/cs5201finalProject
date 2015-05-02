@@ -46,7 +46,7 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 40;
+  const int n = 4;
   
   
   cout<<"genBvec("<<n<<"):  "<<endl;

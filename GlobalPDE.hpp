@@ -36,11 +36,11 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
   const DT negQuarterEle( -1.0/4.0 );
   int col;
   
-  for (int diag=0 ; diag<size ; diag++)
+  for (int diag=0 ; diag<size ; diag++)   //set diagonals to 1
     aMatrix(diag,diag) = oneEle;
   
   const int skip = n-1 ;
-  for (int row=1 ; row<size ; row++)
+  for (int row=1 ; row<size ; row++)    //set -1/4 diagonal with skips
   {
     if ( row % skip == 0)
       continue;
@@ -48,7 +48,7 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
     aMatrix(row, col) = negQuarterEle;
   }
   
-  for (int row=n-1 ; row<size ; row++)
+  for (int row=n-1 ; row<size ; row++)  //set -1/4 diagonal without skips
   {
     col = row - (n-1);
     aMatrix(row,col) = negQuarterEle;
@@ -74,12 +74,14 @@ Vector<DT> genBpdeVector(int n)
     y = Y_MIN + deltaY * i;
     for (int j=1 ; j<n ; j++)
     {
+      //increment/decrement x & y values
       x = X_MIN + deltaX * j;
       left = x - deltaX;
       right = x + deltaX;
       top = y + deltaY;
       bot = y - deltaY;
       
+      //get edge function values
       if (left == X_MIN)
         bVector[bIndex] += DT(poissonEdge(left, y));
       if (right == X_MAX)
@@ -126,6 +128,7 @@ Vector<DT> testApprox(const Vector<DT>& approx)
 
 double poissonEdge(double x, double y)
 {
+  //if x or y is on the edges, return value
 	if (x == X_MIN)
 		return sin(y);
 	if (x == X_MAX)
@@ -134,13 +137,13 @@ double poissonEdge(double x, double y)
 		return sin(x);
 	if (y == Y_MAX)
 		return 0;
-	throw RangeError("x,y is not on poisson edge");
+	throw RangeError("x,y is not on poisson edge");   //otherwise, throw error
 	return 0;
 }
 
 double poissonAnalytical(double x, double y)
 {
-  double answer = (1/sinh(M_PI)) *(sin(x)*sinh(M_PI-y) + sin(y)*sinh(M_PI-x));
+  double answer = (1/sinh(M_PI)) *(sin(x)*sinh(M_PI-y) + sin(y)*sinh(M_PI-x));  //analytical formula
   return answer;
 }
 
