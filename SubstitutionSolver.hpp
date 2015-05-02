@@ -7,7 +7,7 @@
 
 
 template <class DT>
-inline Vector<DT> SubstitutionSolver<DT>::operator()(LowerTriMatrix<DT>& a, Vector<DT>& b)
+inline Vector<DT> SubstitutionSolver<DT>::operator()(LowerTriMatrix<DT>& a, Vector<DT>& b) const
 {
   Vector<DT> result(b.size());
   DT sum;
@@ -28,7 +28,7 @@ inline Vector<DT> SubstitutionSolver<DT>::operator()(LowerTriMatrix<DT>& a, Vect
 }
 
 template <class DT>
-inline Vector<DT> SubstitutionSolver<DT>::operator()(UpperTriMatrix<DT>& a, Vector<DT>& b)
+inline Vector<DT> SubstitutionSolver<DT>::operator()(UpperTriMatrix<DT>& a, Vector<DT>& b) const
 {
   Vector<DT> result(b.size());
   int a_row = a.rows();

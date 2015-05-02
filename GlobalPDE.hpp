@@ -115,8 +115,3 @@ double poissonAnalytical(double x, double y)
   return answer;
 }
 
-
-
-
-
-

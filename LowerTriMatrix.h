@@ -15,10 +15,6 @@ template <class DT>
 class LowerTriMatrix : public virtual MatrixBase<LowerTriMatrix<DT> , DT>
 {
 	public:
-  
-  
-  
-		
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
 		///\see construct()

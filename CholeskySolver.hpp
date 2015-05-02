@@ -10,7 +10,7 @@ using std::pow;
 
 
 template <class DT>
-inline Vector<DT> CholeskySolver<DT>::operator()(SymmMatrix<DT>& a, Vector<DT>& b)
+inline Vector<DT> CholeskySolver<DT>::operator()(SymmMatrix<DT>& a, Vector<DT>& b) const
 {
   const int dim = b.size();
   Vector<DT> result(dim);

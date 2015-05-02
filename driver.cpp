@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cmath>
 
 #include "Vector.h"
 #include "MatrixBase.h"
@@ -16,6 +17,7 @@
 #include "GlobalPDE.h"
 #include "Tests.h"
 #include "SubstitutionSolver.h"
+#include "GaussianSolver.h"
 #include "CholeskySolver.h"
 
 using namespace std;
@@ -44,7 +46,8 @@ int main(int argc, char * argv[])
 	}
 	
   
-  const int n = 4;
+  const int n = 40;
+  
   
   cout<<"genBvec("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
@@ -54,17 +57,24 @@ int main(int argc, char * argv[])
   SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
   cout<<aMatrix<<endl;
   
+  FullMatrix<double> fullA(aMatrix);
+  
+  GaussianSolver<double> gauss;
   SubstitutionSolver<double> subSolver;
   CholeskySolver<double> cholesky;
   
+  Vector<double> xVecGauss = gauss(fullA, bVec);
+  cout<<" xVec Gauss = "<<xVecGauss<<endl;
   
+  // LowerTriMatrix<double> lowerA(aMatrix);
+  // cout<<"lower Tri = "<<endl;
+  // cout<<lowerA<<endl;
   
-  LowerTriMatrix<double> lower(aMatrix);
-  cout<<"lower Tri = "<<endl;
-  cout<<lower<<endl;
+  Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
+  cout<<" xVec Cholesky = "<<xVecCholesky<<endl;
   
-  cout << "Cholesky decomposition: " << endl;
-  cout << cholesky(aMatrix, bVec) << endl;
+  // cout << "Cholesky decomposition: " << endl;
+  // cout << cholesky(aMatrix, bVec) << endl;
 
   
   /*
@@ -75,26 +85,28 @@ int main(int argc, char * argv[])
   
   //----------------analytical solution--------------------//
   
-  Vector<double> analyticalAnswers((n-1)*(n-1));
-  double x = M_PI/n;    //set x and y
-  double y = M_PI/n;
-  int ans =0;
-   
-  for(int i =0; i < (n-1) ; i ++)
-  {
-    for(int j =0; j < (n-1); j ++)
-    { 
-      analyticalAnswers[ans] = poissonAnalytical(x, y);
-      x += M_PI/n;
-      ans ++;
+  
+  Vector<double> errorVec = testApprox(xVecGauss);
+  
+  
+  const int size = std::sqrt(errorVec.size());
+  
+  
+  FullMatrix<double> errorMatrix(size, size);
+  
+  for (int r=0 ; r<size; r++)
+    for (int c=0 ; c<size ; c++)
+    {
+        double val = errorVec[r*c + c];
+        errorMatrix(r,c) = val;
     }
-    x = M_PI/n;   //bring x back to front
-    y += M_PI/n;  //increase y
-  }
+    
+  cout<<"Error Matrix : "<<endl;
+  cout<<errorMatrix<<endl;
   
-  cout << "Analytical answers for n = " << n << ":" << endl;
-  cout << analyticalAnswers << endl;
   
+  
+  // cout<<"Error: "<<testApprox(xVecCholesky)<<endl;
   
   
   return 0;
