@@ -45,76 +45,63 @@ int main(int argc, char * argv[])
 		filename = "";
 	}
 	
-  
-  const int n = 40;
-  
-  
-  cout<<"genBvec("<<n<<"):  "<<endl;
+  const int n = 30;
+	cout<<" **** N = "<<n<<"  ***** "<<endl;
+	
+  // const double MAX_TIME = 16000;
+  long setupStart = getNow();
+	cout<<"Setup: ";
   Vector<double> bVec = genBpdeVector<double>(n);
-  cout<<bVec<<endl;
-  
-  cout<<"genApdeMatrix("<<n<<") :  "<<endl;
+  // cout<<"genBvec("<<n<<"):  "<<bVec<<endl;
   SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
-  cout<<aMatrix<<endl;
+  // cout<<"genApdeMatrix("<<n<<") :  "<<endl<<aMatrix<<endl;
+  long setupEnd = getNow();
+	cout<< (setupEnd-setupStart) <<" milliseconds"<<endl;
   
   FullMatrix<double> fullA(aMatrix);
-  
   GaussianSolver<double> gauss;
   SubstitutionSolver<double> subSolver;
   CholeskySolver<double> cholesky;
   
+  cout<<"Gauss solve: ";
+	long gaussStart = getNow();
   Vector<double> xVecGauss = gauss(fullA, bVec);
-  cout<<" xVec Gauss = "<<xVecGauss<<endl;
-  
-  // LowerTriMatrix<double> lowerA(aMatrix);
-  // cout<<"lower Tri = "<<endl;
-  // cout<<lowerA<<endl;
-  
-  Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
-  cout<<" xVec Cholesky = "<<xVecCholesky<<endl;
-  
-  // cout << "Cholesky decomposition: " << endl;
-  // cout << cholesky(aMatrix, bVec) << endl;
+	long gaussEnd = getNow();
+	cout<< gaussEnd-gaussStart << " milliseconds "<<endl;
+  // cout<<"xVec Gauss = "<<xVecGauss<<endl;
 
-  
-  /*
-  Vector<double> xVec = aMatrix.solve(bVec);
-  cout<<"Solving for Ax=b : ";
-  cout<<xVec<<endl;
-  */
-  
-  //----------------analytical solution--------------------//
-  
-  
-  Vector<double> errorVec = testApprox(xVecGauss);
-  
-  
-  const int size = std::sqrt(errorVec.size());
-  
-  
+  cout<<"xVec Cholesky solve: ";
+	long choleskyStart = getNow();
+  Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
+	long choleskyEnd = getNow();
+	cout<< choleskyEnd-choleskyStart << " milliseconds "<<endl;
+	
+  cout<< "Error : ";
+	long errorStart = getNow();
+	Vector<double> errorVec = testApprox(xVecGauss);
+	const int size = n-1;
+  // const int size = sqrt(errorVec.size());
   FullMatrix<double> errorMatrix(size, size);
-  
   for (int r=0 ; r<size; r++)
     for (int c=0 ; c<size ; c++)
     {
         double val = errorVec[r*c + c];
         errorMatrix(r,c) = val;
     }
-    
-  cout<<"Error Matrix : "<<endl;
-  cout<<errorMatrix<<endl;
-  
-  
-  
-  // cout<<"Error: "<<testApprox(xVecCholesky)<<endl;
-  
+	long errorEnd = getNow();
+	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
+	
+	cout<<"Total: "<< errorEnd-setupStart << " milliseconds"<<endl;
+	
+  // cout<<"millis duration: "<<diffTime<<endl;
+  // cout<<"Error Matrix : "<<endl;
+  // cout<<errorMatrix<<endl;
   
   return 0;
   
-	cout<<"Running unit tests ...."<<endl;
-	
-	testVectorClass();
-	testFullMatrixClass();
+	// cout<<"Running unit tests ...."<<endl;
+	// testVectorClass();
+	// testFullMatrixClass();
 	// testSymmMatrixClass();
 	
 	return 0;

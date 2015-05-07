@@ -9,7 +9,7 @@
 # This is a makefile for building assignment 4 driver executable   ###########
 ##############################################################################
 
-.PHONY: all clean
+.PHONY: all clean reset redo
 
 ########## G + +   C O M M A N D   S E T U P ###############
 
@@ -44,26 +44,27 @@ default: driver
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
-# echo "Compiling $<"
 
 driver: $(OBJECTS) $(LINKS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
 	@echo "Everything worked :-) "
 
-########## C L E A N   C O M M A N D ##########
+########## A R G   C O M M A N D ##########
 clean:
-	-@rm -f core
-	-@rm -f driver
-	-@rm -f .depend
-	-@rm -f driver.exe
-	-@rm -f $(OBJECTS)
+	@rm -f core
+	@rm -f driver
+	@rm -f .depend
+	@rm -f driver.exe
+	@rm -f $(OBJECTS)
+	@echo "cleaned!"
 
+reset: clean default
+redo: reset
 
 ########## G E N   D E P E N D E N C I E S ##########
-.depend: $(SOURCESCPP) $(HEADERS)
+.depend:
 	@echo "Generating dependencies..."
 	@$(CXX) -MM *.cpp > $@
-
 
 -include .depend
 # Put a dash in front of include when using gnu make.

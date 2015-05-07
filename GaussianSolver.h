@@ -4,7 +4,6 @@
 /// Purpose: Substitution solver class for Upper and Lower
 /// Triangular Matrices
 
-
 #ifndef GAUSSIAN_SOLVER_H
 #define GAUSSIAN_SOLVER_H
 
@@ -14,7 +13,6 @@
 #include "RangeError.h"
 #include "SolverBase.h"
 #include "FullMatrix.h"
-
 
 template <class DT>
 class GaussianSolver : public virtual SolverBase<FullMatrix<DT>, DT> 
@@ -42,16 +40,7 @@ class GaussianSolver : public virtual SolverBase<FullMatrix<DT>, DT>
       aMatrix(row2) += aMatrix(row1) * scalar;
     }
     
-    void tolCheck (DT &num, const DT &center = 0) const
-    {
-      if (center - tolerance < num && num < center + tolerance)
-      {
-        if (outputNonZeros && num != 0)
-          cout << "Non-Zero: " << num << endl;
-        if (forceCenter)
-          num = center;
-      }
-    }
+    void tolCheck (DT &num, const DT &center = 0) const;
     
     const double tolerance = .000001;
     const bool forceCenter = true;

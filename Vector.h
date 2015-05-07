@@ -8,7 +8,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-
 #include <stdexcept>
 
 template <class T>
@@ -134,10 +133,7 @@ class Vector
 		//Desc: Accessor to the size of the Vector
 		inline unsigned int size() const { return m_size; }
 		
-		
-		
 		void swapEle(const unsigned int i1, const unsigned int i2);
-		
 		
 	private:
 		// **** D A T A ***** //

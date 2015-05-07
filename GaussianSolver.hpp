@@ -68,7 +68,6 @@ Vector<DT> GaussianSolver<DT>::operator()(FullMatrix<DT>& a, Vector<DT>& b) cons
   if (DEBUG)
     cout << "&&&&&&&&&&&& End: &&&&&&&&&&&&&&" << endl << a << endl;
     
-  cout<<a<<endl;
   return result;
 }
 
@@ -88,3 +87,15 @@ int GaussianSolver<DT>::getPivotRow (const FullMatrix<DT> &a, const unsigned int
 		}
 		return maxRow;
 }  
+
+template <class DT>
+void GaussianSolver<DT>::tolCheck (DT &num, const DT &center) const
+{
+  if (center - tolerance < num && num < center + tolerance)
+  {
+    if (outputNonZeros && num != 0)
+      cout << "Non-Zero: " << num << endl;
+    if (forceCenter)
+      num = center;
+  }
+}

@@ -5,10 +5,10 @@
 /// File: GlobalFunctions.h
 /// Purpose: Global Function declarations and docs
 
-
 #ifndef GLOBAL_FUNCTIONS_H
 #define GLOBAL_FUNCTIONS_H
 
+#include <chrono>
 #include <iostream> // operators << and >>
 #include <vector> // std::vector
 #include "Vector.h" // Vector class definition
@@ -17,6 +17,10 @@
 
 using std::istream;
 using std::ostream;
+namespace sc = std::chrono;
+
+// **** T I M I N G   F U N C T I O N *****//
+// long getNow();
 
 // *** V E C T O R   C L A S S *** //
 
@@ -106,3 +110,4 @@ bool operator!=(const MatrixBase<MT, DT>& lhs, const MatrixBase<MT, DT>& rhs)
 #include "GlobalFunctions.hpp"
 
 #endif
+

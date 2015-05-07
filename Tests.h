@@ -24,5 +24,7 @@ template<class MT, class DT>
 void testCalcOps(const MatrixBase<MT,DT>& matrix);
 
 
+#include "Tests.hpp"
+
 #endif
 

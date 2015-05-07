@@ -13,16 +13,9 @@ using namespace std;
 template <class DT, class MT, class ST>
 Vector<DT> pdeApproximate(const int n, const ST& solver)
 {
-  const int size = (n-1) * (n-1);
-  Vector<DT> approximations(size);
-  
   Vector<DT> bVector = genBpdeVector<DT>(n);
-  
-  SymmMatrix<DT> aSymmMatrix = genApdeMatrix<DT>(n);
-  MT aMatrix(aSymmMatrix);
-  
-  approximations = solver(aMatrix, bVector);
-  
+  MT aMatrix(genApdeMatrix<DT>(n));
+  Vector<DT> approximations = solver(aMatrix, bVector);
   return approximations;
 }
 

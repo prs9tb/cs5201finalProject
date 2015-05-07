@@ -44,7 +44,7 @@ inline Vector<DT> CholeskySolver<DT>::operator()(SymmMatrix<DT>& a, Vector<DT>& 
     }
   }
   
-  std::cout<<lower<<std::endl;
+  // std::cout<<lower<<std::endl;
   
   // do lower Tri forward sub with b
   Vector<DT> forwardSubVector(dim);
