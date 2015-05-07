@@ -99,7 +99,7 @@ Vector<DT> genBpdeVector(int n)
 }
 
 template <class DT>
-Vector<DT> testApprox(const Vector<DT>& approx)
+Vector<DT> genAnalytical(const Vector<DT>& approx)
 {
   const int size = approx.size();
   const int n = sqrt(size) + 1;
@@ -120,9 +120,15 @@ Vector<DT> testApprox(const Vector<DT>& approx)
     x = M_PI/n;   //bring x back to front
     y += M_PI/n;  //increase y
   }
+  return analyticalAnswers;
   
-  Vector<DT> errorVec = analyticalAnswers - approx;
-  return errorVec;
+}
+
+
+template <class DT>
+Vector<DT> getError(const Vector<DT>& approx, const Vector<DT>& analytical)
+{
+  return(analytical - approx);
 }
 
 

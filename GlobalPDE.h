@@ -45,7 +45,10 @@ Vector<DT> genBpdeVector(int n);
 //Description: Function to compare results of our matrix solving methods vs. the analytical
 //solution
 template <class DT>
-Vector<DT> testApprox(const Vector<DT>& approx);
+Vector<DT> genAnalytical(const Vector<DT>& approx);
+
+template <class DT>
+Vector<DT> getError(const Vector<DT>& approx, const Vector<DT>& analytical);
 
 //Pre: x and y must be on the given boundaries of Poisson's equation
 //Post: Returns the analytical solution for Poisson's equation for the given x & y

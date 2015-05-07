@@ -24,6 +24,8 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+
+/*
 	ifstream ifs;
 	string filename;
 	bool fileForInput = false;
@@ -45,17 +47,20 @@ int main(int argc, char * argv[])
 		filename = "";
 	}
 	
+  */
+  if(argc ==0)
+    cout << argc << endl;
+    
+  const int n = atoi(argv[1]);
+  //const int n = 4;
   
-  const int n = 4;
-  
-  
-  cout<<"genBvec("<<n<<"):  "<<endl;
+  cout<<"Generating B Vector("<<n<<"):  "<<endl;
   Vector<double> bVec = genBpdeVector<double>(n);
-  cout<<bVec<<endl;
+  cout<<bVec<<endl << endl << endl;
   
-  cout<<"genApdeMatrix("<<n<<") :  "<<endl;
+  cout<<"Generating A Vector("<<n<<") :  "<<endl;
   SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
-  cout<<aMatrix<<endl;
+  cout<<aMatrix<<endl << endl << endl;
   
   FullMatrix<double> fullA(aMatrix);
   
@@ -64,14 +69,14 @@ int main(int argc, char * argv[])
   CholeskySolver<double> cholesky;
   
   Vector<double> xVecGauss = gauss(fullA, bVec);
-  cout<<" xVec Gauss = "<<xVecGauss<<endl;
+  cout<< endl << "Gaussian solution for x = "<<xVecGauss<<endl;
   
   // LowerTriMatrix<double> lowerA(aMatrix);
   // cout<<"lower Tri = "<<endl;
   // cout<<lowerA<<endl;
   
   Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
-  cout<<" xVec Cholesky = "<<xVecCholesky<<endl;
+  cout<< endl << "Cholesky solution for x = "<< xVecCholesky <<endl << endl;
   
   // cout << "Cholesky decomposition: " << endl;
   // cout << cholesky(aMatrix, bVec) << endl;
@@ -86,8 +91,11 @@ int main(int argc, char * argv[])
   //----------------analytical solution--------------------//
   
   
-  Vector<double> errorVec = testApprox(xVecGauss);
   
+  Vector<double> analyticalAns = genAnalytical(xVecGauss);
+  Vector<double> errorVec = getError(xVecGauss, analyticalAns);  
+  
+  cout << endl << "Analytical Answers for x = " << analyticalAns << endl;
   
   const int size = std::sqrt(errorVec.size());
   
@@ -101,7 +109,7 @@ int main(int argc, char * argv[])
         errorMatrix(r,c) = val;
     }
     
-  cout<<"Error Matrix : "<<endl;
+  cout<<"Error differences matrix : "<<endl;
   cout<<errorMatrix<<endl;
   
   
