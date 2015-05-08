@@ -24,81 +24,88 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+	/*
 	ifstream ifs;
 	string filename;
 	bool fileForInput = false;
-	
 	if (argc > 1)
 	{
 		filename = argv[1];
 		fileForInput = true;
 	}
-	
 	while (fileForInput && ifs.is_open() == false)
 	{
 		if ( filename == "" )
 		{
 			cout<<"Enter input file:"<<endl;
-		   	cin >> filename;
+			cin >> filename;
 		}
 		ifs.open(filename.c_str());
 		filename = "";
-	}
+	} */
 	
-  const int n = 30;
+	int n = 0;
+	
+	if(argc == 1)
+	{
+		cout<<"Enter N:";
+		cin >> n;
+	}
+	else
+		n = atoi(argv[1]);
 	cout<<" **** N = "<<n<<"  ***** "<<endl;
 	
-  // const double MAX_TIME = 16000;
-  long setupStart = getNow();
+	// const double MAX_TIME = 16000;
+	long setupStart = getNow();
 	cout<<"Setup: ";
-  Vector<double> bVec = genBpdeVector<double>(n);
-  // cout<<"genBvec("<<n<<"):  "<<bVec<<endl;
-  SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
-  // cout<<"genApdeMatrix("<<n<<") :  "<<endl<<aMatrix<<endl;
-  long setupEnd = getNow();
+	Vector<double> bVec = genBpdeVector<double>(n);
+	// cout<<"genBvec("<<n<<"):  "<<bVec<<endl;
+	SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
+	// cout<<"genApdeMatrix("<<n<<") :  "<<endl<<aMatrix<<endl;
+	long setupEnd = getNow();
 	cout<< (setupEnd-setupStart) <<" milliseconds"<<endl;
-  
-  FullMatrix<double> fullA(aMatrix);
-  GaussianSolver<double> gauss;
-  SubstitutionSolver<double> subSolver;
-  CholeskySolver<double> cholesky;
-  
-  cout<<"Gauss solve: ";
+	
+	FullMatrix<double> fullA(aMatrix);
+	GaussianSolver<double> gauss;
+	SubstitutionSolver<double> subSolver;
+	CholeskySolver<double> cholesky;
+	
+	cout<<"Gauss solve: ";
 	long gaussStart = getNow();
-  Vector<double> xVecGauss = gauss(fullA, bVec);
+	Vector<double> xVecGauss = gauss(fullA, bVec);
 	long gaussEnd = getNow();
 	cout<< gaussEnd-gaussStart << " milliseconds "<<endl;
-  // cout<<"xVec Gauss = "<<xVecGauss<<endl;
+	// cout<<"xVec Gauss = "<<xVecGauss<<endl;
 
-  cout<<"xVec Cholesky solve: ";
+	cout<<"Cholesky solve: ";
 	long choleskyStart = getNow();
-  Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
+	Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
 	long choleskyEnd = getNow();
 	cout<< choleskyEnd-choleskyStart << " milliseconds "<<endl;
+	// cout<<"xVec Cholesky = "<<xVecCholesky<<endl;
 	
-  cout<< "Error : ";
+	cout<< "Error : ";
 	long errorStart = getNow();
 	Vector<double> errorVec = testApprox(xVecGauss);
-	const int size = n-1;
-  // const int size = sqrt(errorVec.size());
-  FullMatrix<double> errorMatrix(size, size);
-  for (int r=0 ; r<size; r++)
-    for (int c=0 ; c<size ; c++)
-    {
-        double val = errorVec[r*c + c];
-        errorMatrix(r,c) = val;
-    }
+	const int size = n - 1;
+	FullMatrix<double> errorMatrix(size, size);
+	for (int r=0 ; r<size; r++)
+	for (int c=0 ; c<size ; c++)
+	{
+		double val = errorVec[r*c + c];
+		errorMatrix(r,c) = val;
+	}
 	long errorEnd = getNow();
 	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
 	
 	cout<<"Total: "<< errorEnd-setupStart << " milliseconds"<<endl;
 	
-  // cout<<"millis duration: "<<diffTime<<endl;
-  // cout<<"Error Matrix : "<<endl;
-  // cout<<errorMatrix<<endl;
-  
-  return 0;
-  
+	// cout<<"millis duration: "<<diffTime<<endl;
+	// cout<<"Error Matrix : "<<endl;
+	// cout<<errorMatrix<<endl;
+	
+	return 0;
+	
 	// cout<<"Running unit tests ...."<<endl;
 	// testVectorClass();
 	// testFullMatrixClass();

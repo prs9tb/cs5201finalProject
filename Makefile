@@ -58,13 +58,14 @@ clean:
 	@rm -f $(OBJECTS)
 	@echo "cleaned!"
 
-reset: clean default
-redo: reset
+reset: clean
+
+redo: clean default
 
 ########## G E N   D E P E N D E N C I E S ##########
-.depend:
+depend:
 	@echo "Generating dependencies..."
-	@$(CXX) -MM *.cpp > $@
+	@$(CXX) -MM *.cpp > .depend
 
 -include .depend
 # Put a dash in front of include when using gnu make.
