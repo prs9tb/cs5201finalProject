@@ -19,9 +19,10 @@ const double Y_MIN = 0;
 const double X_MAX = M_PI;
 const double Y_MAX = M_PI;
 
-//Pre:
-//Post:
-//Description: 
+//Pre: n must be positive
+//Post: Returns a Vector<DT> of approximations based on the value of n
+//Description: Generates the A matrix and b vector, then solves the system of equations
+//to get the x vector. The method depends on the passed in solver.
 template <class MT, class DT>
 Vector<DT> pdeApproximate(const int n);
 
@@ -52,7 +53,10 @@ inline double poissonAnalytical(double x, double y)
 //Description: Calculates values at the boundaries of Poisson's equation
 double poissonEdge(double x, double y);
 
-
+//Pre: approxMatrix must be a non-empty matrix of approximation values
+//Post: Returns a matrix of error differences
+//Description: Calculates the poissonAnalytical value and then subtracts it from the 
+//corresponding approximation value to get an error value. Does this for every value in the matrix.
 template <class MT, class DT>
 FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix);
 
