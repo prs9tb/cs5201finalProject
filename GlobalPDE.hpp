@@ -74,7 +74,6 @@ Vector<DT> genBpdeVector(int n)
       right = x + deltaX;
       top = y + deltaY;
       bot = y - deltaY;
-      
 	  
       //get edge function values
       if (left == X_MIN)
@@ -111,14 +110,8 @@ FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix)
 	const int cols = errorMatrix.cols();
 	const int n = rows+1;
 	
-	cout<<"testApprox n = "<<n<<endl;
-	
 	const double deltaX = (X_MAX - X_MIN) / n;
 	const double deltaY = (Y_MAX - Y_MIN) / n;
-	
-	// cout<<endl;
-	// cout<<"deltas : "<<deltaX<<endl;
-	// cout<<"rows : "<<rows<<endl;
 	
 	double x, y;
 	for (int r=0 ; r<rows ; r++)
@@ -130,45 +123,7 @@ FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix)
 			errorMatrix(r,c) -= poissonAnalytical(x,y);
 		}
 	}
-	
 	return errorMatrix;
-	
-  // const int size = approx.size();
-  // const int n = sqrt(size) + 1;
-  
-  // Vector<double> analyticalAnswers(size);
-  
-  // double x = M_PI/n;    //set x and y
-  // double y = M_PI/n;
-  // int ans =0;
-  
-	// double deltaX = (X_MAX - X_MIN) / n;
-	// double deltaY = (Y_MAX - Y_MIN) / n;
-	// int index = 0;
-  
-	// for (double y=Y_MIN+deltaY ; y<Y_MAX ; y+= deltaY)
-		// for (double x=X_MIN+deltaX ; x<X_MAX ; x+= deltaX)
-		// {
-			// analyticalAnswers[index] = poissonAnalytical(x, y);
-			// index++;
-		// }
-  
-  
-  // for(int i =0; i < (n-1) ; i ++)
-  // {
-    // for(int j =0; j < (n-1); j ++)
-    // { 
-      // analyticalAnswers[ans] = poissonAnalytical(x, y);
-      // x += M_PI/n;
-      // ans ++;
-    // }
-    // x = M_PI/n;   //bring x back to front
-    // y += M_PI/n;  //increase y
-  // }
-  
-  
-  // Vector<DT> errorVec = analyticalAnswers - approx;
-  // return errorVec;
 }
 
 
@@ -178,20 +133,15 @@ void analyzeApproximation(const Vector<double>& approxVec)
 	const int size = sqrt(numApproximations);
 	const int n = size + 1;
 	char input;
-	
 	FullMatrix<double> approxMatrix(size, size);
+	
 	for (int r=0 ; r<size ; r++)
 		for (int c=0 ; c<size ; c++)
-			approxMatrix(r,c) = approxVec[r*c + c];
-	
+			approxMatrix(r,c) = approxVec[r*size + c];
+			
 	cout<< "Error Checking: ";
 	long errorStart = getNow();
 	FullMatrix<double> errorMatrix = testApprox(approxMatrix);
-	// Vector<double> errorVec = testApprox(approxMatrix);
-	// FullMatrix<double> errorMatrix(size, size);
-	// for (int r=0 ; r<size; r++)
-		// for (int c=0 ; c<size ; c++)
-			// errorMatrix(r,c) = errorVec[r*c + c];
 	long errorEnd = getNow();
 	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
 	
@@ -219,36 +169,40 @@ void analyzeApproximation(const Vector<double>& approxVec)
 		cout<<"\tError max: "<<errorMax<<endl;
 		cout<<"\tError avg: "<<errorAvg<<endl;
 		
-		cout<<"See Error raw data? (y/n): "<<endl;
-		// cin >> input;
-		input= 'y';
+		cout<<"See Error raw data? (y/n): ";
+		cin >> input;
+		// input= 'y'; cout<<endl;
 		if (input == 'y' || input == 'Y')
 			cout<<errorMatrix<<endl;
 		
-		cout<<"See Approximations raw data? (y/n) : "<<endl;
-		// cin >> input;
-		input= 'y';
+		cout<<"See Approximations raw data? (y/n) : ";
+		cin >> input;
+		// input= 'y';  cout<<endl;
 		if (input == 'y' || input == 'Y')
 			cout << approxMatrix <<endl;
 			
-			
-		cout<<"Analytical values: "<<endl;
-		const int rows = errorMatrix.rows();
-		const int cols = errorMatrix.cols();
-		FullMatrix<double> anaMatrix(rows, cols);
-		const double deltaX = (X_MAX - X_MIN) / n;
-		const double deltaY = (Y_MAX - Y_MIN) / n;
-		double x, y;
-		for (int r=0 ; r<rows ; r++)
+		cout<<"See Analytical values? (y/n): ";
+		cin >> input;
+		// input= 'y';  cout<<endl;
+		if (input == 'y' || input == 'Y')
 		{
-			y = Y_MIN + deltaY + r*deltaY;
-			for (int c=0 ; c<cols ; c++)
+			const int rows = errorMatrix.rows();
+			const int cols = errorMatrix.cols();
+			FullMatrix<double> anaMatrix(rows, cols);
+			const double deltaX = (X_MAX - X_MIN) / n;
+			const double deltaY = (Y_MAX - Y_MIN) / n;
+			double x, y;
+			for (int r=0 ; r<rows ; r++)
 			{
-				x = X_MIN + deltaX + c*deltaX;
-				anaMatrix(r,c) = poissonAnalytical(x,y);
+				y = Y_MIN + deltaY + r*deltaY;
+				for (int c=0 ; c<cols ; c++)
+				{
+					x = X_MIN + deltaX + c*deltaX;
+					anaMatrix(r,c) = poissonAnalytical(x,y);
+				}
 			}
+			cout<<anaMatrix<<endl;
 		}
-		cout<<anaMatrix<<endl;
 	}
 	
 }
