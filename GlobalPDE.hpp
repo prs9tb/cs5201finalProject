@@ -24,7 +24,6 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
 {
   const int size = (n-1)*(n-1);
   SymmMatrix<DT> aMatrix(size, size);
-	cout<<"genApdeMatrix n = "<<n<<endl;
   
   const DT oneEle(1);
   const DT negQuarterEle( -1.0/4.0 );
@@ -103,7 +102,7 @@ inline double poissonEdge(double x, double y)
 }
 
 template <class MT, class DT>
-FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix)
+FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix)
 {
 	FullMatrix<DT> errorMatrix(approxMatrix);
 	const int rows = errorMatrix.rows();
@@ -141,7 +140,7 @@ void analyzeApproximation(const Vector<double>& approxVec)
 			
 	cout<< "Error Checking: ";
 	long errorStart = getNow();
-	FullMatrix<double> errorMatrix = testApprox(approxMatrix);
+	FullMatrix<double> errorMatrix = getErrorMatrix(approxMatrix);
 	long errorEnd = getNow();
 	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
 	

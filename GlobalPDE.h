@@ -58,10 +58,10 @@ double poissonEdge(double x, double y);
 //Description: Calculates the poissonAnalytical value and then subtracts it from the 
 //corresponding approximation value to get an error value. Does this for every value in the matrix.
 template <class MT, class DT>
-FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix);
+FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix);
 
 // template <class DT>
-// Vector<DT> testApprox(const Matrix<DT>& approx);
+// Vector<DT> getErrorMatrix(const Matrix<DT>& approx);
 
 void analyzeApproximation(const Vector<double>& approx);
 
