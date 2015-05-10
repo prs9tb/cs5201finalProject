@@ -24,28 +24,7 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-	/*
-	ifstream ifs;
-	string filename;
-	bool fileForInput = false;
-	if (argc > 1)
-	{
-		filename = argv[1];
-		fileForInput = true;
-	}
-	while (fileForInput && ifs.is_open() == false)
-	{
-		if ( filename == "" )
-		{
-			cout<<"Enter input file:"<<endl;
-			cin >> filename;
-		}
-		ifs.open(filename.c_str());
-		filename = "";
-	} */
-	
-	int n = 0;
-	
+	int n;
 	if(argc == 1)
 	{
 		cout<<"Enter N:";
@@ -53,15 +32,12 @@ int main(int argc, char * argv[])
 	}
 	else
 		n = atoi(argv[1]);
-	cout<<" **** N = "<<n<<"  ***** "<<endl;
+	cout<<" ****** N = "<<n<<" ******* "<<endl;
 	
-	// const double MAX_TIME = 16000;
 	long setupStart = getNow();
 	cout<<"Setup: ";
 	Vector<double> bVec = genBpdeVector<double>(n);
-	// cout<<"genBvec("<<n<<"):  "<<bVec<<endl;
 	SymmMatrix<double> aMatrix = genApdeMatrix<double>(n);
-	// cout<<"genApdeMatrix("<<n<<") :  "<<endl<<aMatrix<<endl;
 	long setupEnd = getNow();
 	cout<< (setupEnd-setupStart) <<" milliseconds"<<endl;
 	
@@ -70,23 +46,30 @@ int main(int argc, char * argv[])
 	SubstitutionSolver<double> subSolver;
 	CholeskySolver<double> cholesky;
 	
-	cout<<"Gauss solve: ";
+	cout<<" ****** Gaussian Elimination ******"<<endl;
+	cout<<"Solve time: ";
 	long gaussStart = getNow();
 	Vector<double> xVecGauss = gauss(fullA, bVec);
 	long gaussEnd = getNow();
 	cout<< gaussEnd-gaussStart << " milliseconds "<<endl;
-	// cout<<"xVec Gauss = "<<xVecGauss<<endl;
-
-	cout<<"Cholesky solve: ";
+	analyzeApproximation(xVecGauss);
+	
+	cout<<endl<<" ****** Cholesky Decomposition and Substitution ******"<<endl;
+	cout<<"Solve time: ";
 	long choleskyStart = getNow();
 	Vector<double> xVecCholesky = cholesky(aMatrix, bVec);
 	long choleskyEnd = getNow();
 	cout<< choleskyEnd-choleskyStart << " milliseconds "<<endl;
-	// cout<<"xVec Cholesky = "<<xVecCholesky<<endl;
+	analyzeApproximation(xVecCholesky);	
 	
-	cout<< "Error : ";
+	cout<<" ******** THE END *********"<<endl;
+	return 0;
+	
+	/*
+	cout<< "Error Checking: ";
 	long errorStart = getNow();
 	Vector<double> errorVec = testApprox(xVecGauss);
+	
 	const int size = n - 1;
 	FullMatrix<double> errorMatrix(size, size);
 	for (int r=0 ; r<size; r++)
@@ -98,11 +81,43 @@ int main(int argc, char * argv[])
 	long errorEnd = getNow();
 	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
 	
-	cout<<"Total: "<< errorEnd-setupStart << " milliseconds"<<endl;
+	cout<<"Total: "<< getNow()-setupStart << " milliseconds"<<endl;
+	char input;
+	
+	cout<<"See Error Summary? (y/n) : ";
+	cin >> input;
+	if (input == 'y' || input == 'Y')
+	{
+		double ele = errorMatrix(0,0);
+		double absEle = ele>=0? ele : -ele;
+		double errorMin = absEle;
+		double errorMax = absEle;
+		double errorAvg = 0;
+		for (int r=0 ; r<size ; r++)
+			for (int c=0 ; c<size ; c++)
+			{
+				ele = errorMatrix(r,c);
+				absEle = ele>=0? ele : -ele;
+				if (absEle > errorMax) errorMax = absEle;
+				if (absEle < errorMin) errorMin = absEle;
+				errorAvg += absEle;
+			}
+		errorAvg /= size*size;
+		
+		cout<<"\tError min: "<<errorMin<<endl;
+		cout<<"\tError max: "<<errorMax<<endl;
+		cout<<"\tError avg: "<<errorAvg<<endl;
+	}
+	
+	cout<<"See Error raw data? (y/n): ";
+	cin >> input;
+	if (input == 'y' || input == 'Y')
+	{
+		cout<<"Error Matrix : "<<endl;
+		cout<<errorMatrix<<endl;
+	}
 	
 	// cout<<"millis duration: "<<diffTime<<endl;
-	// cout<<"Error Matrix : "<<endl;
-	// cout<<errorMatrix<<endl;
 	
 	return 0;
 	
@@ -112,5 +127,6 @@ int main(int argc, char * argv[])
 	// testSymmMatrixClass();
 	
 	return 0;
+	*/
 }
 

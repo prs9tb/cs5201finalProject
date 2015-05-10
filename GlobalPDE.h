@@ -11,6 +11,7 @@
 #include "FullMatrix.h"
 #include "SymmMatrix.h"
 
+using namespace std;
 
 //-----------------BOUNDARIES------------------//
 const double X_MIN = 0;
@@ -38,19 +39,12 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n);
 template <class DT>
 Vector<DT> genBpdeVector(int n);
 
-//Pre: Subtraction must be defined for Vector<DT>, approx vector should contain
-//approximations for Poisson's equation (can not be null)
-//Post: Returns a vector of (approximation answer - analytical answer) elements for each
-//answer
-//Description: Function to compare results of our matrix solving methods vs. the analytical
-//solution
-template <class DT>
-Vector<DT> genAnalytical(const Vector<DT>& approx);
-
 //Pre: x and y must be on the given boundaries of Poisson's equation
 //Post: Returns the analytical solution for Poisson's equation for the given x & y
 //Description: function to get analytical solution values for Poisson's equation
-double poissonAnalytical(double x, double y);
+inline double poissonAnalytical(double x, double y)
+{	return (1/sinh(M_PI)) *(sin(x)*sinh(M_PI-y) + sin(y)*sinh(M_PI-x)); }
+
 
 //Pre: x and y must be within the domain of Poisson's equation
 //Post: If x or y is on the boundary, return the value for that boundary function
@@ -59,9 +53,13 @@ double poissonAnalytical(double x, double y);
 double poissonEdge(double x, double y);
 
 
+template <class MT, class DT>
+FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix);
 
-template <class DT>
-Vector<DT> testApprox(const Vector<DT>& approx);
+// template <class DT>
+// Vector<DT> testApprox(const Matrix<DT>& approx);
+
+void analyzeApproximation(const Vector<double>& approx);
 
 #include "GlobalPDE.hpp"
 

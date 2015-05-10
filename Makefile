@@ -45,7 +45,7 @@ default: driver
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-driver: $(OBJECTS) $(LINKS)
+driver: $(OBJECTS) $(SOURCESHPP) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
 	@echo "Everything worked :-) "
 
