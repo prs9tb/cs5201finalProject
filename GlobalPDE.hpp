@@ -104,7 +104,7 @@ inline double poissonEdge(double x, double y)
 template <class MT, class DT>
 FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix)
 {
-	FullMatrix<DT> errorMatrix(approxMatrix);
+	FullMatrix<DT> errorMatrix(approxMatrix);   //set equal to approx
 	const int rows = errorMatrix.rows();
 	const int cols = errorMatrix.cols();
 	const int n = rows+1;
@@ -113,13 +113,13 @@ FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix)
 	const double deltaY = (Y_MAX - Y_MIN) / n;
 	
 	double x, y;
-	for (int r=0 ; r<rows ; r++)
+	for (int r=0 ; r<rows ; r++)    //loops through x & y values
 	{
 		y = Y_MIN + deltaY + r*deltaY;
 		for (int c=0 ; c<cols ; c++)
 		{
 			x = X_MIN + deltaX + c*deltaX;
-			errorMatrix(r,c) -= poissonAnalytical(x,y);
+			errorMatrix(r,c) -= poissonAnalytical(x,y); //subtract analytical value
 		}
 	}
 	return errorMatrix;
@@ -144,11 +144,11 @@ void analyzeApproximation(const Vector<double>& approxVec)
 	long errorEnd = getNow();
 	cout<< (errorEnd-errorStart) <<" milliseconds"<<endl;
 	
-	cout<<"See Error Summary? (y/n) : ";
+	cout<<"See Error Summary? (y/n) : ";    //prompts user
 	cin >> input;
 	if (input == 'y' || input == 'Y')
 	{
-		double ele = errorMatrix(0,0);
+		double ele = errorMatrix(0,0);      //error summary
 		double absEle = ele>=0? ele : -ele;
 		double errorMin = absEle;
 		double errorMax = absEle;
@@ -168,20 +168,20 @@ void analyzeApproximation(const Vector<double>& approxVec)
 		cout<<"\tError max: "<<errorMax<<endl;
 		cout<<"\tError avg: "<<errorAvg<<endl;
 		
-		cout<<"See Error raw data? (y/n): ";
+		cout<<"See Error raw data? (y/n): ";    //error raw data
 		cin >> input;
 		// input= 'y'; cout<<endl;
 		if (input == 'y' || input == 'Y')
 			cout<<errorMatrix<<endl;
 		
-		cout<<"See Approximations raw data? (y/n) : ";
+		cout<<"See Approximations raw data? (y/n) : ";    //approximations
 		cin >> input;
 		// input= 'y';  cout<<endl;
 		if (input == 'y' || input == 'Y')
 			cout << approxMatrix <<endl;
 			
-		cout<<"See Analytical values? (y/n): ";
-		cin >> input;
+		cout<<"See Analytical values? (y/n): ";     //analytical solutions
+		cin >> input; 
 		// input= 'y';  cout<<endl;
 		if (input == 'y' || input == 'Y')
 		{

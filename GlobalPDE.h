@@ -60,9 +60,11 @@ double poissonEdge(double x, double y);
 template <class MT, class DT>
 FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix);
 
-// template <class DT>
-// Vector<DT> getErrorMatrix(const Matrix<DT>& approx);
 
+//Pre: approx must be a non-empty vector of approximation values
+//Post: Outputs analysis to screen
+//Description: Prompts user and outputs error summary, times for calculation, and 
+//solution matrices if user inputs "y"
 void analyzeApproximation(const Vector<double>& approx);
 
 #include "GlobalPDE.hpp"
