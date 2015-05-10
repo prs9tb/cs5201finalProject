@@ -54,10 +54,10 @@ double poissonEdge(double x, double y);
 
 
 template <class MT, class DT>
-FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix);
+FullMatrix<DT> getErrorMatrix(const MatrixBase<MT, DT>& approxMatrix);
 
 // template <class DT>
-// Vector<DT> testApprox(const Matrix<DT>& approx);
+// Vector<DT> getErrorMatrix(const Matrix<DT>& approx);
 
 void analyzeApproximation(const Vector<double>& approx);
 
