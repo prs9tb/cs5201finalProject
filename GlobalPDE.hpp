@@ -13,7 +13,6 @@ using namespace std;
 template <class DT, class MT, class ST>
 Vector<DT> pdeApproximate(const int n, const ST& solver)
 {
-	cout<<"pdeApproximate n = "<<n<<endl;
   Vector<DT> bVector = genBpdeVector<DT>(n);
   MT aMatrix(genApdeMatrix<DT>(n));
   Vector<DT> approximations = solver(aMatrix, bVector);
@@ -25,6 +24,7 @@ SymmMatrix<DT> genApdeMatrix(unsigned int n)
 {
   const int size = (n-1)*(n-1);
   SymmMatrix<DT> aMatrix(size, size);
+	cout<<"genApdeMatrix n = "<<n<<endl;
   
   const DT oneEle(1);
   const DT negQuarterEle( -1.0/4.0 );
@@ -120,35 +120,18 @@ FullMatrix<DT> testApprox(const MatrixBase<MT, DT>& approxMatrix)
 	// cout<<"deltas : "<<deltaX<<endl;
 	// cout<<"rows : "<<rows<<endl;
 	
-	int col = 0;
-	int row = 0;
-	for (double y=Y_MIN+deltaY ; y<Y_MAX ; y+= deltaY)
-	{
-		for (double x=X_MIN+deltaX ; x<X_MAX ; x+= deltaX)
-		{
-			errorMatrix(row,col) -= poissonAnalytical(x,y);
-			col++;
-		}
-		row++;
-		col = 0;
-	}
-	
-	return errorMatrix;
-	
-	
-	DT x, y;
+	double x, y;
 	for (int r=0 ; r<rows ; r++)
 	{
-		y = Y_MIN + (deltaY * r);
+		y = Y_MIN + deltaY + r*deltaY;
 		for (int c=0 ; c<cols ; c++)
 		{
-			x = X_MIN + (deltaX * c);
+			x = X_MIN + deltaX + c*deltaX;
 			errorMatrix(r,c) -= poissonAnalytical(x,y);
 		}
 	}
 	
 	return errorMatrix;
-	
 	
   // const int size = approx.size();
   // const int n = sqrt(size) + 1;
@@ -193,6 +176,7 @@ void analyzeApproximation(const Vector<double>& approxVec)
 {
 	const int numApproximations = approxVec.size();
 	const int size = sqrt(numApproximations);
+	const int n = size + 1;
 	char input;
 	
 	FullMatrix<double> approxMatrix(size, size);
@@ -235,15 +219,36 @@ void analyzeApproximation(const Vector<double>& approxVec)
 		cout<<"\tError max: "<<errorMax<<endl;
 		cout<<"\tError avg: "<<errorAvg<<endl;
 		
-		cout<<"See Error raw data? (y/n): ";
-		cin >> input;
+		cout<<"See Error raw data? (y/n): "<<endl;
+		// cin >> input;
+		input= 'y';
 		if (input == 'y' || input == 'Y')
 			cout<<errorMatrix<<endl;
 		
-		cout<<"See Approximations raw data? (y/n) : ";
-		cin >> input;
+		cout<<"See Approximations raw data? (y/n) : "<<endl;
+		// cin >> input;
+		input= 'y';
 		if (input == 'y' || input == 'Y')
 			cout << approxMatrix <<endl;
+			
+			
+		cout<<"Analytical values: "<<endl;
+		const int rows = errorMatrix.rows();
+		const int cols = errorMatrix.cols();
+		FullMatrix<double> anaMatrix(rows, cols);
+		const double deltaX = (X_MAX - X_MIN) / n;
+		const double deltaY = (Y_MAX - Y_MIN) / n;
+		double x, y;
+		for (int r=0 ; r<rows ; r++)
+		{
+			y = Y_MIN + deltaY + r*deltaY;
+			for (int c=0 ; c<cols ; c++)
+			{
+				x = X_MIN + deltaX + c*deltaX;
+				anaMatrix(r,c) = poissonAnalytical(x,y);
+			}
+		}
+		cout<<anaMatrix<<endl;
 	}
 	
 }
