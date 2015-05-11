@@ -1,4 +1,4 @@
-// Programmer: Abira Das
+// Programmer: Abira Das, Patrick Sullivan
 // Class: CS 5201 (Price)
 //SubstitutionSolver.hpp
 //implementations for the SubstitutionSolver.h file

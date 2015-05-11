@@ -1,3 +1,6 @@
+//Abira Das and Patrick Sullivan
+//GlobalPDE.h
+//header file for GlobalPDE.hpp
 
 #ifndef GLOBAL_PDE_H
 #define GLOBAL_PDE_H
