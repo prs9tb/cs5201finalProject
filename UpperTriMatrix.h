@@ -15,8 +15,6 @@ class UpperTriMatrix : public virtual MatrixBase<UpperTriMatrix<DT> , DT>
 {
 	public:
   
-  
-  
 		
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
