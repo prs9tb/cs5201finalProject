@@ -1,4 +1,4 @@
-/// Programmer: Abira Das
+/// Programmer: Abira Das, Patrick Sullivan
 /// Class: CS 5201 (Price)
 /// File: SolverBase.h
 /// Purpose: Interface Solver Base class
