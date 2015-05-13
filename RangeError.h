@@ -20,46 +20,46 @@ using namespace std;
 
 class RangeError: public exception
 {
-  public:
-    RangeError(int i)
-    {
-      sprintf(message, "Range Error: value=%d", i);
-    }
+	public:
+		RangeError(int i)
+		{
+			sprintf(message, "Range Error: value=%d", i);
+		}
 	
-    RangeError(const char* err)
-    {
-      sprintf(message, "[%s]" , err);
-    }
+		RangeError(const char* err)
+		{
+			sprintf(message, "[%s]" , err);
+		}
 	
-    virtual const char* what() const noexcept  
-    {
-      return message;
-    }
+		virtual const char* what() const noexcept  
+		{
+			return message;
+		}
 	
-  private:
-    char message[100];
+	private:
+		char message[100];
 };
 
 class SizeError: public exception
 {
-  public:
-    SizeError(int i)
-    {
-      sprintf(message, "Size Error: value=%d", i);
-    }
+	public:
+		SizeError(int i)
+		{
+			sprintf(message, "Size Error: value=%d", i);
+		}
 	
-    SizeError(const char* err)
-    {
-      sprintf(message, "[%s]" , err);
-    }
+		SizeError(const char* err)
+		{
+			sprintf(message, "[%s]" , err);
+		}
 	
-    virtual const char* what() const noexcept  
-    {
-      return message;
-    }
+		virtual const char* what() const noexcept  
+		{
+			return message;
+		}
 	
-  private:
-    char message[100];
+	private:
+		char message[100];
 };
 
 #endif

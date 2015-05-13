@@ -18,21 +18,21 @@
 
 template <class DT>
 class SubstitutionSolver : public virtual SolverBase<LowerTriMatrix<DT>, DT> ,
-                           public virtual SolverBase<UpperTriMatrix<DT>, DT>
+													 public virtual SolverBase<UpperTriMatrix<DT>, DT>
 {
-  public:
-    SubstitutionSolver() {}
-    //Pre: LowerTri must contain a linearly independent set of vectors, cannot have negative values
-    //in the diagonal, passed in augmented Array must be the same size as m_rows
-    //Post: Uses backSubstitution to solve a linearly independent system and outputs the result
-    //Description: Solves a matrix with back substitution for the SolverBase class
-    
-    virtual Vector<DT> operator()(LowerTriMatrix<DT>& a, Vector<DT>& b) const;
-    //Pre: UpperTri must contain a linearly independent set of vectors,  
-    //passed in augmented Array must be the same size as m_rows
-    //Post: Uses backSubstitution to solve a linearly independent system and outputs the result
-    //Description: Solves a matrix with back substitution for the SolverBase class
-    virtual Vector<DT> operator()(UpperTriMatrix<DT>& a, Vector<DT>& b) const;
+	public:
+		SubstitutionSolver() {}
+		//Pre: LowerTri must contain a linearly independent set of vectors, cannot have negative values
+		//in the diagonal, passed in augmented Array must be the same size as m_rows
+		//Post: Uses backSubstitution to solve a linearly independent system and outputs the result
+		//Description: Solves a matrix with back substitution for the SolverBase class
+		
+		virtual Vector<DT> operator()(LowerTriMatrix<DT>& a, Vector<DT>& b) const;
+		//Pre: UpperTri must contain a linearly independent set of vectors,  
+		//passed in augmented Array must be the same size as m_rows
+		//Post: Uses backSubstitution to solve a linearly independent system and outputs the result
+		//Description: Solves a matrix with back substitution for the SolverBase class
+		virtual Vector<DT> operator()(UpperTriMatrix<DT>& a, Vector<DT>& b) const;
 };
 
 

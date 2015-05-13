@@ -23,16 +23,16 @@ template <class DT>
 template <class MT>
 void UpperTriMatrix<DT>::construct(const MatrixBase<MT, DT>& source)
 {
-  m_rows = source.rows ();
-  m_cols = source.cols ();
-  m_data = new Vector<DT> [m_rows];
-  for (int r = 0 ; r < m_rows ; r++)
-  {
-    const int colMax = (r > m_cols) ? m_cols : m_cols - r ;
-    m_data[r].resize (colMax);
-    for (int c = r ; c < m_cols ; c++)
-      operator () (r, c) = source (r, c);
-  }
+	m_rows = source.rows ();
+	m_cols = source.cols ();
+	m_data = new Vector<DT> [m_rows];
+	for (int r = 0 ; r < m_rows ; r++)
+	{
+		const int colMax = (r > m_cols) ? m_cols : m_cols - r ;
+		m_data[r].resize (colMax);
+		for (int c = r ; c < m_cols ; c++)
+			operator () (r, c) = source (r, c);
+	}
 }
 
 template <class DT> 
@@ -40,15 +40,15 @@ void UpperTriMatrix<DT>::construct(unsigned int rows, unsigned int cols)
 {
 	if (rows != cols)
 		throw logic_error("UpperTriMatrix from non-Square matrix impossible");
-  m_rows = rows;
-  m_cols = cols;
-  m_data = new Vector<DT> [m_rows];
-  int colMax;
-  for (int r = 0 ; r < rows ; r++)
-  {
-    colMax = (r > m_cols) ? 0 : m_cols - r ;
-    m_data[r].resize (colMax);
-  }
+	m_rows = rows;
+	m_cols = cols;
+	m_data = new Vector<DT> [m_rows];
+	int colMax;
+	for (int r = 0 ; r < rows ; r++)
+	{
+		colMax = (r > m_cols) ? 0 : m_cols - r ;
+		m_data[r].resize (colMax);
+	}
 }
 
 
@@ -73,7 +73,7 @@ UpperTriMatrix<T>& UpperTriMatrix<T>::operator+=(const UpperTriMatrix<T>& rhs)
 	if (m_cols != rCols)
 		throw logic_error("UpperTriMatrix += cols not aligned");
 	for (int r=0 ; r<m_rows ; r++)
-    m_data[r] += rhs.m_data[r];
+		m_data[r] += rhs.m_data[r];
 		// (*this)(r) += rhs(r);
 	return *this;
 }
@@ -88,7 +88,7 @@ UpperTriMatrix<T>& UpperTriMatrix<T>::operator-=(const UpperTriMatrix<T>& rhs)
 	if (m_cols != rCols)
 		throw logic_error("UpperTriMatrix -= cols not aligned");
 	for (int r=0 ; r<m_rows ; r++)
-    m_data[r] -= rhs.m_data[r];
+		m_data[r] -= rhs.m_data[r];
 		// operator()(r) -= rhs(r);
 	return *this;
 }
@@ -97,7 +97,7 @@ template <class T>
 UpperTriMatrix<T>& UpperTriMatrix<T>::operator*=(const T& rhs)
 {
 	for (int r=0 ; r<m_rows ; r++)
-    m_data[r] *= rhs;
+		m_data[r] *= rhs;
 		// (*this)(r) *= rhs;
 	return *this;
 }
@@ -167,9 +167,9 @@ inline T& UpperTriMatrix<T>::operator()(unsigned int r, unsigned int c)
 		throw logic_error("UpperTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
 		throw logic_error("UpperTriMatrix (r,c) reference col off matrix");
-  if (r > c)
-    throw logic_error("UpperTriMatrix (r,c) reference to restrited area");
-  return m_data[r][c - r];
+	if (r > c)
+		throw logic_error("UpperTriMatrix (r,c) reference to restrited area");
+	return m_data[r][c - r];
 }
 
 template <class T>
@@ -179,7 +179,7 @@ inline const T& UpperTriMatrix<T>::constAccess(unsigned int r, unsigned int c) c
 		throw logic_error("UpperTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
 		throw logic_error("UpperTriMatrix (r,c) reference col off matrix");
-  if (r > c)
-    return s_zeroElt;
-  return m_data[r][c - r];
+	if (r > c)
+		return s_zeroElt;
+	return m_data[r][c - r];
 }

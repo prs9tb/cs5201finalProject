@@ -109,10 +109,10 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 		// *** A C C E S S   F U N C T I O N S *** //
 		virtual DT& operator()(unsigned int r, unsigned int c);
 		virtual const DT& operator()(unsigned int r, unsigned int c) const;
-    
-    virtual const DT& getValue(unsigned int r, unsigned int c) const;
-    virtual void setValue(unsigned int r, unsigned int c, const DT& value);
-    
+		
+		virtual const DT& getValue(unsigned int r, unsigned int c) const;
+		virtual void setValue(unsigned int r, unsigned int c, const DT& value);
+		
 		// Pre: None
 		//Excp: throws out_of_range if index exceeds m_rows
 		//Post: accesses the m_data[index] element
@@ -131,7 +131,7 @@ class FullMatrix : public virtual MatrixBase<FullMatrix<DT> , DT>
 		unsigned int m_rows;
 		unsigned int m_cols;
 		static const DT s_zeroElt;
-    
+
 		///\pre unallocated m_data
 		///\post allocated m_data and members sized correctly
 		///\param source shows data to be copied to here

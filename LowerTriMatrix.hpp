@@ -27,14 +27,14 @@ void LowerTriMatrix<DT>::construct(const MatrixBase<MT, DT>& source)
 	m_cols = source.cols();
 	m_data = new Vector<DT> [m_rows];
 	
-  int colMax;
+	int colMax;
 	for (int r=0 ; r<m_rows ; r++)
 	{
 		colMax = (r<m_cols)? r+1 : m_cols;
 		m_data[r].resize(colMax);
 		
 		for (int c=0 ; c<colMax ; c++)
-      m_data[r][c] = source(r,c);
+			m_data[r][c] = source(r,c);
 	}
 }
 
@@ -137,18 +137,18 @@ const Vector<T> LowerTriMatrix<T>::operator*(const Vector<T>& rhs) const
 template <class DT>
 const UpperTriMatrix<DT> LowerTriMatrix<DT>::transpose()const
 {
-  UpperTriMatrix<DT> upper(m_rows, m_cols);
-  DT value;
-  for(int i =0 ; i < m_rows; i ++)
-  {
-    for(int j =0; j <= i ; j ++) 
-    {
-      //std::cout << i << " " << j << std::endl;
-      value = getValue(i,j);
-      upper.setValue(j, i, value);
-    }  
-  }
-  return(upper);
+	UpperTriMatrix<DT> upper(m_rows, m_cols);
+	DT value;
+	for(int i =0 ; i < m_rows; i ++)
+	{
+		for(int j =0; j <= i ; j ++) 
+		{
+			//std::cout << i << " " << j << std::endl;
+			value = getValue(i,j);
+			upper.setValue(j, i, value);
+		}  
+	}
+	return(upper);
 }
 
 template <class T>
@@ -194,9 +194,9 @@ inline T& LowerTriMatrix<T>::operator()(unsigned int r, unsigned int c)
 		throw logic_error("LowerTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
 		throw logic_error("LowerTriMatrix (r,c) reference col off matrix");
-  if (r < c)
-    throw logic_error("LowerTriMatrix (r,c) reference to restrited area");
-  return m_data[r][c];
+	if (r < c)
+		throw logic_error("LowerTriMatrix (r,c) reference to restrited area");
+	return m_data[r][c];
 }
 
 template <class T>
@@ -206,7 +206,7 @@ inline const T& LowerTriMatrix<T>::constAccess(unsigned int r, unsigned int c) c
 		throw logic_error("LowerTriMatrix (r,c) reference row off matrix");
 	if (c >= m_cols)
 		throw logic_error("LowerTriMatrix (r,c) reference col off matrix");
-  if (r < c)
-    return s_zeroElt;
-  return m_data[r][c];
+	if (r < c)
+		return s_zeroElt;
+	return m_data[r][c];
 }

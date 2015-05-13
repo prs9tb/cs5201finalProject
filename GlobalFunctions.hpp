@@ -11,10 +11,10 @@
 
 long getNow()
 {
-  auto time = sc::system_clock::now();
-  auto since_epoch = time.time_since_epoch();
-  auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
-  return millis.count();
+	auto time = sc::system_clock::now();
+	auto since_epoch = time.time_since_epoch();
+	auto millis = sc::duration_cast<sc::milliseconds>(since_epoch);
+	return millis.count();
 }
 
 // *** V E C T O R   C L A S S *** //

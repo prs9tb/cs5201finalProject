@@ -13,82 +13,82 @@ using namespace std;
 template <class DT, class MT, class ST>
 Vector<DT> pdeApproximate(const int n, const ST& solver)
 {
-  Vector<DT> bVector = genBpdeVector<DT>(n);
-  MT aMatrix(genApdeMatrix<DT>(n));
-  Vector<DT> approximations = solver(aMatrix, bVector);
-  return approximations;
+	Vector<DT> bVector = genBpdeVector<DT>(n);
+	MT aMatrix(genApdeMatrix<DT>(n));
+	Vector<DT> approximations = solver(aMatrix, bVector);
+	return approximations;
 }
 
 template <class DT>
 SymmMatrix<DT> genApdeMatrix(unsigned int n)
 {
-  const int size = (n-1)*(n-1);
-  SymmMatrix<DT> aMatrix(size, size);
-  
-  const DT oneEle(1);
-  const DT negQuarterEle( -1.0/4.0 );
-  int col;
-  
-  for (int diag=0 ; diag<size ; diag++)   //set diagonals to 1
-    aMatrix(diag,diag) = oneEle;
-  
-  const int skip = n-1 ;
-  for (int row=1 ; row<size ; row++)    //set -1/4 diagonal with skips
-  {
-    if ( row % skip == 0)
-      continue;
-    col = row - 1;
-    aMatrix(row, col) = negQuarterEle;
-  }
-  
-  for (int row=n-1 ; row<size ; row++)  //set -1/4 diagonal without skips
-  {
-    col = row - (n-1);
-    aMatrix(row,col) = negQuarterEle;
-  }
-  
-  return aMatrix;
+	const int size = (n-1)*(n-1);
+	SymmMatrix<DT> aMatrix(size, size);
+	
+	const DT oneEle(1);
+	const DT negQuarterEle( -1.0/4.0 );
+	int col;
+	
+	for (int diag=0 ; diag<size ; diag++)   //set diagonals to 1
+		aMatrix(diag,diag) = oneEle;
+	
+	const int skip = n-1 ;
+	for (int row=1 ; row<size ; row++)    //set -1/4 diagonal with skips
+	{
+		if ( row % skip == 0)
+			continue;
+		col = row - 1;
+		aMatrix(row, col) = negQuarterEle;
+	}
+	
+	for (int row=n-1 ; row<size ; row++)  //set -1/4 diagonal without skips
+	{
+		col = row - (n-1);
+		aMatrix(row,col) = negQuarterEle;
+	}
+	
+	return aMatrix;
 }
 
 template <class DT>
 Vector<DT> genBpdeVector(int n)
 {
-  Vector<DT> bVector((n-1) * (n-1));
-  
-  double deltaX = (X_MAX - X_MIN) / n;
-  double deltaY = (Y_MAX - Y_MIN) / n;
-  int bIndex = 0;
-  
-  double left, right, top, bot;
-  double x, y;
-  
-  for (int i=1 ; i<n ; i++)
-  {
-    y = Y_MIN + deltaY * i;
-    for (int j=1 ; j<n ; j++)
-    {
-      //increment/decrement x & y values
-      x = X_MIN + deltaX * j;
-      left = x - deltaX;
-      right = x + deltaX;
-      top = y + deltaY;
-      bot = y - deltaY;
+	Vector<DT> bVector((n-1) * (n-1));
+	
+	double deltaX = (X_MAX - X_MIN) / n;
+	double deltaY = (Y_MAX - Y_MIN) / n;
+	int bIndex = 0;
+	
+	double left, right, top, bot;
+	double x, y;
+	
+	for (int i=1 ; i<n ; i++)
+	{
+		y = Y_MIN + deltaY * i;
+		for (int j=1 ; j<n ; j++)
+		{
+			//increment/decrement x & y values
+			x = X_MIN + deltaX * j;
+			left = x - deltaX;
+			right = x + deltaX;
+			top = y + deltaY;
+			bot = y - deltaY;
 	  
-      //get edge function values
-      if (left == X_MIN)
-        bVector[bIndex] += DT(poissonEdge(left, y));
-      if (right == X_MAX)
-        bVector[bIndex] += DT(poissonEdge(right, y));
-      if (bot == Y_MIN)
-        bVector[bIndex] += DT(poissonEdge(x, bot));
-      if (top == Y_MAX)
-        bVector[bIndex] += DT(poissonEdge(x, top));
-      bIndex++;
-    }
-  }
-  
-  bVector *= 0.25;
-  return bVector;
+			//get edge function values
+			if (left == X_MIN)
+				bVector[bIndex] += DT(poissonEdge(left, y));
+			if (right == X_MAX)
+				bVector[bIndex] += DT(poissonEdge(right, y));
+			if (bot == Y_MIN)
+				bVector[bIndex] += DT(poissonEdge(x, bot));
+			if (top == Y_MAX)
+				bVector[bIndex] += DT(poissonEdge(x, top));
+			bIndex++;
+		}
+	}
+	
+	bVector *= 0.25;
+	return bVector;
 }
 
 inline double poissonEdge(double x, double y)

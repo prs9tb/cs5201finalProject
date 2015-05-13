@@ -17,7 +17,7 @@ class MatrixBase
 		virtual const DT& operator()(unsigned int r, unsigned int c) const = 0;
 		virtual DT& operator()(unsigned int r, unsigned int c) = 0;
 		
-    virtual MT& operator=(const MT& rhs) = 0;
+		virtual MT& operator=(const MT& rhs) = 0;
 		virtual MT& operator+=(const MT& other) = 0;
 		virtual MT& operator-=(const MT& other) = 0;
 		virtual MT& operator*=(const DT& other) = 0;

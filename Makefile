@@ -13,8 +13,8 @@
 
 ########## G + +   C O M M A N D   S E T U P ###############
 
-CXX = /usr/bin/g++
-# CXX = g++
+# CXX = /usr/bin/g++
+CXX = g++
 CXXFLAGS = -g -Wall -W -pedantic-errors -std=c++11
 
 ########## O B J E C T   F I L E S ##############

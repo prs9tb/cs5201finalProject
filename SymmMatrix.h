@@ -21,12 +21,12 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		// *** ( D E - ) C O N S T R U C T O R S *** //
 		
 		///\see construct()
-    SymmMatrix()
-    { construct(0,0); };
+		SymmMatrix()
+		{ construct(0,0); };
 		
 		///\see construct()
-    SymmMatrix(unsigned int dims)
-    { construct(dims, dims);  }
+		SymmMatrix(unsigned int dims)
+		{ construct(dims, dims);  }
 		
 		///\see construct()
 		SymmMatrix(const unsigned int rows , const unsigned int cols)
@@ -94,9 +94,9 @@ class SymmMatrix : public virtual MatrixBase<SymmMatrix<DT> , DT>
 		///\post shows m_data information or empty matrix space
 		///\throw logic error on bad index
 		virtual const DT& operator()(unsigned int r, unsigned int c) const;
-    
-    virtual const DT& getValue(unsigned int r, unsigned int c) const;
-    virtual void setValue(unsigned int r, unsigned int c, const DT& value);
+		
+		virtual const DT& getValue(unsigned int r, unsigned int c) const;
+		virtual void setValue(unsigned int r, unsigned int c, const DT& value);
 		
 	private:
 		Vector<DT> * m_data;
